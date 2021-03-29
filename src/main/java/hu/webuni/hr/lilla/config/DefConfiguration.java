@@ -8,8 +8,8 @@ import hu.webuni.hr.lilla.service.DefaultEmployeeService;
 import hu.webuni.hr.lilla.service.EmployeeService;
 
 @Configuration
-@Profile("basic")
-public class BasicConfiguration {
+@Profile("def")
+public class DefConfiguration {
 	
 	
 	@Bean 

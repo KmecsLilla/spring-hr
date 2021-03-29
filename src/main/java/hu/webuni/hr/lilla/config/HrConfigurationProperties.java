@@ -2,8 +2,6 @@ package hu.webuni.hr.lilla.config;
 
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "hr")
@@ -16,7 +14,7 @@ public class HrConfigurationProperties {
 		return employeeAugment;
 	}
 
-	public void setEmployeeAugment(EmployeeAugment employeeAugment) {
+	public void setAugment(EmployeeAugment employeeAugment) {
 		this.employeeAugment = employeeAugment;
 	}
 

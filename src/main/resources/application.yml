@@ -1,0 +1,15 @@
+spring:
+  profiles:    active: def   
+hr:
+  employeeaugment:
+    def:
+      percent: 5 
+    smart3:
+      percent: 10
+      limit: 120
+    smart2:
+      percent: 5
+      limit: 60
+    smart1:
+      percent: 2
+      limit: 30
