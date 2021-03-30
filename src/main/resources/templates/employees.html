@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>HR application</title>
+</head>
+<body>
+		<h1>Welcome to the HR application!</h1>
+<table>
+	<tr>
+		<th>ID</th>
+		<th>NAME</th>
+		<th>SALARY</th>
+		<th>STARTING_TO_WORK</th>
+	</tr>
+		<tr	th:each="employee : ${employees}">
+		<td th:text="${employee.id}">ID</td>
+		<td th:text="${employee.name}">NAME</td>
+		<td th:text="${employee.salary}">SALARY</td>
+		<td th:text="${employee.startingToWork}">STARTING_TO_WORK</td>
+	</tr>
+</table>
+
+</body>
+</html>
