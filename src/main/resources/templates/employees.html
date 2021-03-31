@@ -10,16 +10,44 @@
 	<tr>
 		<th>ID</th>
 		<th>NAME</th>
+		<th>STATUS</th>
 		<th>SALARY</th>
 		<th>STARTING_TO_WORK</th>
 	</tr>
 		<tr	th:each="employee : ${employees}">
 		<td th:text="${employee.id}">ID</td>
 		<td th:text="${employee.name}">NAME</td>
+		<td th:text="${employee.status}">STATUS</td>
 		<td th:text="${employee.salary}">SALARY</td>
 		<td th:text="${employee.startingToWork}">STARTING_TO_WORK</td>
 	</tr>
 </table>
 
+
+<!-- <form th:action="saveCustomer.html" th:action="@{/saveCustomer}"th:object="${customer}"method="post"> -->
+<!-- <input type="hidden" th:field="*{id}"/> -->
+<!-- <labelfor="firstName">Firstname:</label> -->
+<!-- <input type="text" th:field="*{firstName}"value="John" /> -->
+<!-- <labelfor="lastName">Lastname:</label> -->
+<!-- <input type="text" th:field="*{lastName}"value="Wayne" /> -->
+<!-- <labelfor="balance">Balance(dollars):</label> -->
+<!-- <input type="text" th:field="*{balance}"size="10" value="2500" /> -->
+<!-- <input type="submit" /> -->
+<!-- </form> -->
+
+
+<br>
+<br>
+<form th:action="@{/employees}" method="post" th:object="${newEmployee}">
+		Id: <input th:field="*{id}" /> <br/>
+		Name: <input th:field="*{name}" /> <br/>
+		Status: <input th:field="*{status}" /> <br/>
+		Salary: <input th:field="*{salary}" /> <br/>
+		Starting to work: <input th:field="*{status}" /> <br/>
+		<input type="submit" value="Add" /> 
+</form>
+
 </body>
 </html>
+
+
