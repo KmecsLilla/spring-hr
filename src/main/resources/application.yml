@@ -1,5 +1,11 @@
 spring:
-  profiles:    active: def   
+  profiles:    active: 
+    - def
+      thymeleaf:
+    cache: false
+    
+  mvc:    format:      date-time: yyyy-MM-dd HH:mm:ss 
+  
 hr:
   employeeaugment:
     def:

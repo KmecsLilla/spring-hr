@@ -18,11 +18,11 @@ public class HrTLController {
 	private List<EmployeeDto> allEmployee = new ArrayList<>();
 	
 	{
-		allEmployee.add(new EmployeeDto(18, "Eliza","értékesítési igazgató", 1_500_000,LocalDateTime.of(1999,4,1,1,1,1)));
-		allEmployee.add(new EmployeeDto(14, "Jani", "projektmenedzser", 800_000,  LocalDateTime.of(2002,12,1,1,1,1)));
-		allEmployee.add(new EmployeeDto(12, "Józsi", "csoportvezető", 600_000, LocalDateTime.of(2013,1,4,1,1,1)));
-		allEmployee.add(new EmployeeDto(16, "Pisti", "asszisztens", 500_000, LocalDateTime.of(2017,3,5,1,1,1)));
-		allEmployee.add(new EmployeeDto(20, "Vilma", "junior", 400_000, LocalDateTime.of(2019,12,9,1,1,1)));
+		allEmployee.add(new EmployeeDto(1, "Eliza","értékesítési igazgató", 1_500_000,LocalDateTime.of(1999,4,1,1,1,1)));
+		allEmployee.add(new EmployeeDto(2, "Jani", "projektmenedzser", 800_000,  LocalDateTime.of(2002,12,1,1,1,1)));
+		allEmployee.add(new EmployeeDto(3, "Józsi", "csoportvezető", 600_000, LocalDateTime.of(2013,1,4,1,1,1)));
+		allEmployee.add(new EmployeeDto(4, "Pisti", "asszisztens", 500_000, LocalDateTime.of(2017,3,5,1,1,1)));
+		allEmployee.add(new EmployeeDto(5, "Vilma", "junior", 400_000, LocalDateTime.of(2019,12,9,1,1,1)));
 	}
 	
 	@GetMapping("/")
