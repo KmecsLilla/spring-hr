@@ -13,6 +13,7 @@
 		<th>STATUS</th>
 		<th>SALARY</th>
 		<th>STARTING TO WORK</th>
+		<th>DELETE</th>
 	</tr>
 		<tr	th:each="employee : ${employees}">
 		<td th:text="${employee.id}">ID</td>
@@ -20,6 +21,7 @@
 		<td th:text="${employee.status}">STATUS</td>
 		<td th:text="${employee.salary}">SALARY</td>
 		<td th:text="${employee.startingToWork}">STARTING_TO_WORK</td>
+		<td><a th:href="${'deleteemployee/' + employee.id}" th:text="${'Delete'}">DELETE</a></td>
 	</tr>
 </table>
 

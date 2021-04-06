@@ -59,15 +59,37 @@ public class HrTLController {
 	
 	@PostMapping("/modifyemployee")
 	public String updateEmployee(EmployeeDto employeeDto) {
+		int index = findEmployeeIndexById(employeeDto.getId());
+		allEmployee.set(index, employeeDto);
+		return "redirect:employees";
+	}
+	
+	@GetMapping("/deleteemployee/{id}")
+	public String deleteEmployee(@PathVariable long id) {
+		int index = findEmployeeIndexById(id);
+		allEmployee.remove(index);
+		return "redirect:/employees";
+	}
+	
+	protected int findEmployeeIndexById(long id) {
 		int foundIndex = -1;
 		for (int i = 0; i < allEmployee.size(); i++) {
-			if (allEmployee.get(i).getId() == employeeDto.getId()) {
+			if (allEmployee.get(i).getId() == id) {
 				foundIndex = i;
 				break;
 			}
 		}
-		allEmployee.set(foundIndex, employeeDto);
-		return "redirect:employees";
+		return foundIndex;
 	}
 
 }
+
+//3.heti gyakorlás:
+//	
+//Bővítsd ki a hr alkalmazásban a Thymeleaf alapú felületet az alábbi módon:
+//	
+//•Az alkalmazottakat listázó táblázatban az alkalmazott neve legyen egy link, ami átvisz az alkalmazott 
+//szerkesztőoldalára, ahol egy form elküldésévelmódosítható az adott alkalmazott, az id-je kivételével
+//
+//•Az alkalmazottakat listázó táblázatban szerepeljen egy plusz oszlop, amelyben egy “Töröl” link szerepel minden sorhoz. 
+//Megnyomásával értelemszerűen törlődjön a megfelelő alkalmazott a listából
