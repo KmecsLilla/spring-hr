@@ -12,11 +12,11 @@
 		<th>NAME</th>
 		<th>STATUS</th>
 		<th>SALARY</th>
-		<th>STARTING_TO_WORK</th>
+		<th>STARTING TO WORK</th>
 	</tr>
 		<tr	th:each="employee : ${employees}">
 		<td th:text="${employee.id}">ID</td>
-		<td th:text="${employee.name}">NAME</td>
+		<td><a th:href="${'modifyemployee/' + employee.id}" th:text="${employee.name}">NAME</a></td>
 		<td th:text="${employee.status}">STATUS</td>
 		<td th:text="${employee.salary}">SALARY</td>
 		<td th:text="${employee.startingToWork}">STARTING_TO_WORK</td>

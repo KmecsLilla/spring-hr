@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import hu.webuni.hr.lilla.dto.EmployeeDto;
@@ -42,4 +43,31 @@ public class HrTLController {
 		allEmployee.add(employee);
 		return "redirect:employees";
 	}
+	
+	@GetMapping("/modifyemployee/{id}")
+	public String modifyEmployee(@PathVariable long id, Map<String, Object> model) {
+		EmployeeDto foundEmployee = null;
+		for (EmployeeDto employee : allEmployee) {
+			if (employee.getId() == id) {
+				foundEmployee = employee;
+				break;
+			}
+		}
+		model.put("employee", foundEmployee);
+		return "modifyemployee";
+	}
+	
+	@PostMapping("/modifyemployee")
+	public String updateEmployee(EmployeeDto employeeDto) {
+		int foundIndex = -1;
+		for (int i = 0; i < allEmployee.size(); i++) {
+			if (allEmployee.get(i).getId() == employeeDto.getId()) {
+				foundIndex = i;
+				break;
+			}
+		}
+		allEmployee.set(foundIndex, employeeDto);
+		return "redirect:employees";
+	}
+
 }
