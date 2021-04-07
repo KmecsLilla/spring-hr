@@ -2,6 +2,7 @@ package hu.webuni.hr.lilla.web;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import hu.webuni.hr.lilla.dto.EmployeeDto;
+import hu.webuni.hr.lilla.model.Employee;
 
 
 @Controller
@@ -44,42 +46,70 @@ public class HrTLController {
 		return "redirect:employees";
 	}
 	
-	@GetMapping("/modifyemployee/{id}")
-	public String modifyEmployee(@PathVariable long id, Map<String, Object> model) {
-		EmployeeDto foundEmployee = null;
-		for (EmployeeDto employee : allEmployee) {
+//	Korábbi verzióm:
+//	@GetMapping("/modifyemployee/{id}")
+//	public String modifyEmployee(@PathVariable long id, Map<String, Object> model) {
+//		EmployeeDto foundEmployee = null;
+//		for (EmployeeDto employee : allEmployee) {
+//			if (employee.getId() == id) {
+//				foundEmployee = employee;
+//				break;
+//			}
+//		}
+//		model.put("employee", foundEmployee);
+//		return "modifyemployee";
+//	}
+//	
+//	@PostMapping("/modifyemployee")
+//	public String updateEmployee(EmployeeDto employeeDto) {
+//		int index = findEmployeeIndexById(employeeDto.getId());
+//		allEmployee.set(index, employeeDto);
+//		return "redirect:employees";
+//	}
+//	
+//	@GetMapping("/deleteemployee/{id}")
+//	public String deleteEmployee(@PathVariable long id) {
+//		int index = findEmployeeIndexById(id);
+//		allEmployee.remove(index);
+//		return "redirect:/employees";
+//	}
+//	
+//	protected int findEmployeeIndexById(long id) {
+//		int foundIndex = -1;
+//		for (int i = 0; i < allEmployee.size(); i++) {
+//			if (allEmployee.get(i).getId() == id) {
+//				foundIndex = i;
+//				break;
+//			}
+//		}
+//		return foundIndex;
+//	}
+	
+	@GetMapping("/deleteemployee/{id}")
+	public String deleteEmployee(@PathVariable long id) {
+		for (Iterator<EmployeeDto> iterator = allEmployee.iterator(); iterator.hasNext();) {
+			EmployeeDto employee = iterator.next();
 			if (employee.getId() == id) {
-				foundEmployee = employee;
+				iterator.remove();
 				break;
 			}
 		}
-		model.put("employee", foundEmployee);
+		return "redirect:/employees";
+	}
+	
+	@GetMapping("/employees/{id}")
+	public String modifyEmployee(@PathVariable long id, Map<String, Object> model) {
+		model.put("employee", allEmployee.stream().filter(e -> e.getId() == id).findFirst().get());
 		return "modifyemployee";
 	}
 	
 	@PostMapping("/modifyemployee")
 	public String updateEmployee(EmployeeDto employeeDto) {
-		int index = findEmployeeIndexById(employeeDto.getId());
-		allEmployee.set(index, employeeDto);
-		return "redirect:employees";
-	}
-	
-	@GetMapping("/deleteemployee/{id}")
-	public String deleteEmployee(@PathVariable long id) {
-		int index = findEmployeeIndexById(id);
-		allEmployee.remove(index);
-		return "redirect:/employees";
-	}
-	
-	protected int findEmployeeIndexById(long id) {
-		int foundIndex = -1;
-		for (int i = 0; i < allEmployee.size(); i++) {
-			if (allEmployee.get(i).getId() == id) {
-				foundIndex = i;
-				break;
-			}
+		for (int i = 0; i < allEmployee.size(); i++)
+			if (allEmployee.get(i).getId() == employeeDto.getId()) {
+				allEmployee.set(i, employeeDto);
 		}
-		return foundIndex;
+		return "redirect:employees";
 	}
 
 }

@@ -17,11 +17,13 @@
 	</tr>
 		<tr	th:each="employee : ${employees}">
 		<td th:text="${employee.id}">ID</td>
-		<td><a th:href="${'modifyemployee/' + employee.id}" th:text="${employee.name}">NAME</a></td>
+<!-- 		<td><a th:href="${'modifyemployee/' + employee.id}" th:text="${employee.name}">NAME</a></td> -->
+		<td><a th:href="@{/employees/{id}(id = ${employee.id})}" th:text="${employee.name}">NAME</a></td>
 		<td th:text="${employee.status}">STATUS</td>
 		<td th:text="${employee.salary}">SALARY</td>
 		<td th:text="${employee.startingToWork}">STARTING_TO_WORK</td>
-		<td><a th:href="${'deleteemployee/' + employee.id}" th:text="${'Delete'}">DELETE</a></td>
+<!-- 		<td><a th:href="${'deleteemployee/' + employee.id}" th:text="${'Delete'}">DELETE</a></td> -->
+		<td><a th:href="@{/deleteemployee/{id}(id=${employee.id})}">Delete</a></td>
 	</tr>
 </table>
 

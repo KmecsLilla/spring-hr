@@ -2,12 +2,35 @@ package hu.webuni.hr.lilla.dto;
 
 import java.util.List;
 
-public class CompanyDto {
+import com.fasterxml.jackson.annotation.JsonView;
 
-	private long registerId;
+public class CompanyDto {
+	@JsonView(Views.BaseData.class)
+	private long id;
+	@JsonView(Views.BaseData.class)
+	private long registrationNumber;
+	@JsonView(Views.BaseData.class)
 	private String name;
+	@JsonView(Views.BaseData.class)
 	private String address;
+	
 	private List<EmployeeDto> employeesOfCompany;
+	
+	public CompanyDto(long id, long registrationNumber, String name, String address, List<EmployeeDto> employeesOfCompany) {
+		this.id = id;
+		this.registrationNumber = registrationNumber;
+		this.name = name;
+		this.address = address;
+		this.employeesOfCompany = employeesOfCompany;
+	}
+		
+//	public CompanyDto(long id, long registrationNumber, String name, String address) {
+//	super();
+//	this.id = id;
+//	this.registrationNumber = registrationNumber;
+//	this.name = name;
+//	this.address = address;
+//	}
 	
 //	private Address address;
 //		"streetAddress": "21 2nd Street",
@@ -19,20 +42,22 @@ public class CompanyDto {
 		
 	}
 	
-	public CompanyDto(long registerId, String name, String address, List<EmployeeDto> employeesOfCompany) {
-		super();
-		this.registerId = registerId;
-		this.name = name;
-		this.address = address;
-		this.employeesOfCompany = employeesOfCompany;
+
+
+	public long getId() {
+		return id;
 	}
 
-	public long getRegisterId() {
-		return registerId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public void setRegisterId(long registerId) {
-		this.registerId = registerId;
+	public long getRegistrationNumber() {
+		return registrationNumber;
+	}
+
+	public void setRegistrationNumber(long registrationNumber) {
+		this.registrationNumber = registrationNumber;
 	}
 
 	public String getName() {

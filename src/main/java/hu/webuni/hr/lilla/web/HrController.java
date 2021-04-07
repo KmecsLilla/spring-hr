@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.webuni.hr.lilla.dto.EmployeeDto;
+import hu.webuni.hr.lilla.model.Employee;
+import hu.webuni.hr.lilla.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -32,6 +35,10 @@ public class HrController {
 		allEmployee.put(4L, new EmployeeDto(4L,"Pisti", "asszisztens", 500_000, LocalDateTime.of(2017,3,5,1,1,1)));
 		allEmployee.put(5L, new EmployeeDto(5L,"Vilma", "junior", 400_000, LocalDateTime.of(2019,12,9,1,1,1)));
 	}
+	
+	
+	@Autowired
+	EmployeeService employeeService;
 
 //	@GetMapping
 //	public List<EmployeeDto> getAll() {
@@ -44,7 +51,8 @@ public class HrController {
 //		return allEmployee.values().stream()
 //				.filter(e -> e.getSalary() > minSalary)
 //				.collect(Collectors.toList());
-//	}
+//	}	
+	
 	
 	@GetMapping
 	public List<EmployeeDto> getEmployees(@RequestParam(required = false) Integer minSalary) {
@@ -88,4 +96,8 @@ public class HrController {
 		allEmployee.remove(id);
 	}
 	
+	@PostMapping("/payraise")
+	public int getPayRaise(@RequestBody Employee employee) {
+		return employeeService.getPayRaisePercent(employee);
+	}
 }

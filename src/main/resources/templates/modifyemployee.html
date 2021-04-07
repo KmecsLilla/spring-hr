@@ -8,6 +8,7 @@
 	<h1>Modify employee data</h1>
 		
 	<form th:action="@{/modifyemployee}" method="post" th:object="${modifiedemployee}">
+		Id: <span th:text="${employee.id}" ></span>
 		<input type="hidden" th:field="${employee.id}" /><br>
 		Name: <input th:field="${employee.name}" /><br>
 		Status: <input th:field="${employee.status}" /><br>
