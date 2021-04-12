@@ -2,9 +2,15 @@ package hu.webuni.hr.lilla.dto;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotEmpty;
+
 public class EmployeeDto {
 	private long id;
+	
+	@NotEmpty
 	private String name;
+	
+	@NotEmpty
 	private String status;
 	private int salary;
 	private LocalDateTime startingToWork;

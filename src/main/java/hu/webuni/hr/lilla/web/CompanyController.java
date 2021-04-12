@@ -30,7 +30,7 @@ import hu.webuni.hr.lilla.dto.Views;
 
 @RestController
 @RequestMapping("/api/companies")
-public class HrCompanyController {
+public class CompanyController {
 	private Map<Long, CompanyDto> allCompany = new HashMap<>();
 	{
 		List<EmployeeDto> employeesOfCompany1 = new ArrayList<>();

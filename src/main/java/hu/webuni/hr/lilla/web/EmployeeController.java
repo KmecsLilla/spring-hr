@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,15 +21,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.hr.lilla.dto.EmployeeDto;
 import hu.webuni.hr.lilla.model.Employee;
 import hu.webuni.hr.lilla.service.EmployeeService;
+import hu.webuni.hr.lilla.service.SalaryException;
+import hu.webuni.hr.lilla.service.StartToWorkException;
 
 @RestController
 @RequestMapping("/api/employees")
-public class HrController {
-	
+public class EmployeeController {
+
+//  átkerül a service pack-be	
 	private Map<Long, EmployeeDto> allEmployee = new HashMap<>();
 	{
 		allEmployee.put(1L, new EmployeeDto(1L,"Eliza","értékesítési igazgató", 1_500_000,LocalDateTime.of(1999,4,1,1,1,1)));
@@ -51,7 +58,18 @@ public class HrController {
 //		return allEmployee.values().stream()
 //				.filter(e -> e.getSalary() > minSalary)
 //				.collect(Collectors.toList());
-//	}	
+//	}		
+	
+//	@GetMapping
+//	public List<EmployeeDto> getEmployees(@RequestParam(required = false) Integer minSalary) {
+//		if (minSalary == null) {
+//			return new ArrayList<>(allEmployee.values());
+//		}
+//		else
+//			return allEmployee.values().stream()
+//				.filter(e -> e.getSalary() > minSalary)
+//				.collect(Collectors.toList());
+//	}
 	
 	
 	@GetMapping
@@ -65,30 +83,74 @@ public class HrController {
 				.collect(Collectors.toList());
 	}
 	
+//	@GetMapping("/{id}")
+//	public ResponseEntity<EmployeeDto> getById(@PathVariable long id) {
+//		EmployeeDto employeeDto = allEmployee.get(id);
+//		if (employeeDto != null) {
+//			return ResponseEntity.ok(employeeDto);
+//		}
+//		else 
+//			return ResponseEntity.notFound().build();
+//	}
+	
 	@GetMapping("/{id}")
-	public ResponseEntity<EmployeeDto> getById(@PathVariable long id) {
+	public EmployeeDto getById(@PathVariable long id) {
 		EmployeeDto employeeDto = allEmployee.get(id);
 		if (employeeDto != null) {
-			return ResponseEntity.ok(employeeDto);
+			return employeeDto;
 		}
-		else 
-			return ResponseEntity.notFound().build();
+		else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}			
 	}
 	
+//	@PostMapping
+//	public EmployeeDto createEmployee(@RequestBody EmployeeDto employeeDto) {
+//		allEmployee.put(employeeDto.getId(), employeeDto);
+//		return employeeDto;
+//	}
+	
+//	@PutMapping("/{id}")
+//	public ResponseEntity<EmployeeDto> modifyEmployee(@PathVariable long id, @RequestBody EmployeeDto employeeDto) {
+//		if (!allEmployee.containsKey(id)) {
+//			ResponseEntity.notFound().build();
+//		}
+//		employeeDto.setId(id);
+//		allEmployee.put(id, employeeDto);
+//		return ResponseEntity.ok(employeeDto) ;
+//	}
+	
 	@PostMapping
-	public EmployeeDto createEmployee(@RequestBody EmployeeDto employeeDto) {
+	public EmployeeDto createEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
+		checkStartingToWork(employeeDto);
+		checkSalary(employeeDto);
 		allEmployee.put(employeeDto.getId(), employeeDto);
 		return employeeDto;
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<EmployeeDto> modifyEmployee(@PathVariable long id, @RequestBody EmployeeDto employeeDto) {
+	public ResponseEntity<EmployeeDto> modifyEmployee(@PathVariable long id, @RequestBody @Valid EmployeeDto employeeDto) {
 		if (!allEmployee.containsKey(id)) {
 			ResponseEntity.notFound().build();
 		}
+		checkStartingToWork(employeeDto);
+		checkSalary(employeeDto);
 		employeeDto.setId(id);
 		allEmployee.put(id, employeeDto);
 		return ResponseEntity.ok(employeeDto) ;
+	}
+	
+	private void checkStartingToWork(EmployeeDto employeeDto) {
+		if (LocalDateTime.now().isBefore(employeeDto.getStartingToWork())) {
+			throw new StartToWorkException(employeeDto);
+		}
+	}
+	
+	private void checkSalary(EmployeeDto employeeDto) {
+		if (employeeDto.getSalary() < 0) {
+			throw new SalaryException(employeeDto);
+		}
+		
 	}
 	
 	@DeleteMapping("/{id}")

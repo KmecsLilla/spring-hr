@@ -5,12 +5,16 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonView;
 
 public class CompanyDto {
+	
 	@JsonView(Views.BaseData.class)
 	private long id;
+	
 	@JsonView(Views.BaseData.class)
 	private long registrationNumber;
+	
 	@JsonView(Views.BaseData.class)
 	private String name;
+	
 	@JsonView(Views.BaseData.class)
 	private String address;
 	
