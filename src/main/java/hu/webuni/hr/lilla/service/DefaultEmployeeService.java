@@ -9,7 +9,7 @@ import hu.webuni.hr.lilla.config.HrConfigurationProperties;
 import hu.webuni.hr.lilla.model.Employee;
 
 @Service
-public class DefaultEmployeeService implements EmployeeService {
+public class DefaultEmployeeService extends HrEmployeeService {
 
 //	@Value("${hr.employeeaugment.def.percent0}")
 //	private int defPercent;

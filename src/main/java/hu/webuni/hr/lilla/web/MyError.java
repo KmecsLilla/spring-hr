@@ -1,5 +1,6 @@
 package hu.webuni.hr.lilla.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.validation.FieldError;
@@ -16,6 +17,7 @@ public class MyError {
 		super();
 		this.message = message;
 		this.errorCode = errorCode;
+		this.fieldErrors = new ArrayList<>();
 	}
 
 	public String getMessage() {
@@ -36,7 +38,11 @@ public class MyError {
 	
 	public List<FieldError> getFieldErrors() {
 		return fieldErrors;
-	}	
+	}
+	
+	public void addFieldError(FieldError fieldError) {
+		fieldErrors.add(fieldError);
+	}
 	
 	public void setFieldErrors(List<FieldError> fieldErrors) {
 		this.fieldErrors = fieldErrors;

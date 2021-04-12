@@ -10,7 +10,7 @@ import hu.webuni.hr.lilla.config.HrConfigurationProperties;
 import hu.webuni.hr.lilla.model.Employee;
 
 @Service
-public class SmartEmployeeService implements EmployeeService {
+public class SmartEmployeeService extends HrEmployeeService {
 
 //	@Value("${hr.employeeaugment.smart3.limit}")
 //	private int limit3;

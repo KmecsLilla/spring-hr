@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.hr.lilla.dto.EmployeeDto;
+import hu.webuni.hr.lilla.mapper.EmployeeMapper;
 import hu.webuni.hr.lilla.model.Employee;
 import hu.webuni.hr.lilla.service.EmployeeService;
+import hu.webuni.hr.lilla.service.HrEmployeeService;
 import hu.webuni.hr.lilla.service.SalaryException;
 import hu.webuni.hr.lilla.service.StartToWorkException;
 
@@ -34,19 +36,24 @@ import hu.webuni.hr.lilla.service.StartToWorkException;
 public class EmployeeController {
 
 //  átkerül a service pack-be	
-	private Map<Long, EmployeeDto> allEmployee = new HashMap<>();
-	{
-		allEmployee.put(1L, new EmployeeDto(1L,"Eliza","értékesítési igazgató", 1_500_000,LocalDateTime.of(1999,4,1,1,1,1)));
-		allEmployee.put(2L, new EmployeeDto(2L,"Jani", "projektmenedzser", 800_000,  LocalDateTime.of(2002,12,1,1,1,1)));
-		allEmployee.put(3L, new EmployeeDto(3L,"Józsi", "csoportvezető", 600_000, LocalDateTime.of(2013,1,4,1,1,1)));
-		allEmployee.put(4L, new EmployeeDto(4L,"Pisti", "asszisztens", 500_000, LocalDateTime.of(2017,3,5,1,1,1)));
-		allEmployee.put(5L, new EmployeeDto(5L,"Vilma", "junior", 400_000, LocalDateTime.of(2019,12,9,1,1,1)));
-	}
-	
+//	private Map<Long, EmployeeDto> allEmployee = new HashMap<>();
+//	{
+//		allEmployee.put(1L, new EmployeeDto(1L,"Eliza","értékesítési igazgató", 1_500_000,LocalDateTime.of(1999,4,1,1,1,1)));
+//		allEmployee.put(2L, new EmployeeDto(2L,"Jani", "projektmenedzser", 800_000,  LocalDateTime.of(2002,12,1,1,1,1)));
+//		allEmployee.put(3L, new EmployeeDto(3L,"Józsi", "csoportvezető", 600_000, LocalDateTime.of(2013,1,4,1,1,1)));
+//		allEmployee.put(4L, new EmployeeDto(4L,"Pisti", "asszisztens", 500_000, LocalDateTime.of(2017,3,5,1,1,1)));
+//		allEmployee.put(5L, new EmployeeDto(5L,"Vilma", "junior", 400_000, LocalDateTime.of(2019,12,9,1,1,1)));
+//	}
+//	
+//	@Autowired
+//	EmployeeService employeeService;
 	
 	@Autowired
-	EmployeeService employeeService;
-
+	HrEmployeeService hrEmployeeService;
+			
+	@Autowired
+	EmployeeMapper employeeMapper;
+	
 //	@GetMapping
 //	public List<EmployeeDto> getAll() {
 //		return new ArrayList<>(allEmployee.values());
@@ -75,12 +82,12 @@ public class EmployeeController {
 	@GetMapping
 	public List<EmployeeDto> getEmployees(@RequestParam(required = false) Integer minSalary) {
 		if (minSalary == null) {
-			return new ArrayList<>(allEmployee.values());
-		}
-		else
-			return allEmployee.values().stream()
+			return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findAll());
+		} else {
+			return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findAll()).stream()
 				.filter(e -> e.getSalary() > minSalary)
 				.collect(Collectors.toList());
+		}
 	}
 	
 //	@GetMapping("/{id}")
@@ -95,11 +102,10 @@ public class EmployeeController {
 	
 	@GetMapping("/{id}")
 	public EmployeeDto getById(@PathVariable long id) {
-		EmployeeDto employeeDto = allEmployee.get(id);
+		EmployeeDto employeeDto = employeeMapper.employeeToDto(hrEmployeeService.findById(id));
 		if (employeeDto != null) {
 			return employeeDto;
-		}
-		else {
+		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}			
 	}
@@ -120,24 +126,48 @@ public class EmployeeController {
 //		return ResponseEntity.ok(employeeDto) ;
 //	}
 	
+//	@PostMapping
+//	public EmployeeDto createEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
+//		checkStartingToWork(employeeDto);
+//		checkSalary(employeeDto);
+//		allEmployee.put(employeeDto.getId(), employeeDto);
+//		return employeeDto;
+//	}
+	
 	@PostMapping
 	public EmployeeDto createEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
 		checkStartingToWork(employeeDto);
 		checkSalary(employeeDto);
-		allEmployee.put(employeeDto.getId(), employeeDto);
+		Employee employee = employeeMapper.dtoToEmployee(employeeDto);
+		hrEmployeeService.save(employee);
 		return employeeDto;
 	}
 	
+//	@PutMapping("/{id}")
+//	public ResponseEntity<EmployeeDto> modifyEmployee(@PathVariable long id, @RequestBody @Valid EmployeeDto employeeDto) {
+//		if (!allEmployee.containsKey(id)) {
+//			ResponseEntity.notFound().build();
+//		}
+//		checkStartingToWork(employeeDto);
+//		checkSalary(employeeDto);
+//		employeeDto.setId(id);
+//		allEmployee.put(id, employeeDto);
+//		return ResponseEntity.ok(employeeDto) ;
+//	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<EmployeeDto> modifyEmployee(@PathVariable long id, @RequestBody @Valid EmployeeDto employeeDto) {
-		if (!allEmployee.containsKey(id)) {
-			ResponseEntity.notFound().build();
-		}
 		checkStartingToWork(employeeDto);
 		checkSalary(employeeDto);
 		employeeDto.setId(id);
-		allEmployee.put(id, employeeDto);
-		return ResponseEntity.ok(employeeDto) ;
+		Employee employee = employeeMapper.dtoToEmployee(employeeDto);
+		employee = hrEmployeeService.modify(employee);
+		if (employee != null) {
+			employeeDto = employeeMapper.employeeToDto(employee);
+			return ResponseEntity.ok(employeeDto) ;
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	private void checkStartingToWork(EmployeeDto employeeDto) {
@@ -149,17 +179,26 @@ public class EmployeeController {
 	private void checkSalary(EmployeeDto employeeDto) {
 		if (employeeDto.getSalary() < 0) {
 			throw new SalaryException(employeeDto);
-		}
-		
+		}	
 	}
+	
+//	@DeleteMapping("/{id}")
+//	public void deleteEmployee(@PathVariable long id) {
+//		employeeService.remove(id);
+//	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteEmployee(@PathVariable long id) {
-		allEmployee.remove(id);
+		hrEmployeeService.delete(id);
 	}
+	
+//	@PostMapping("/payraise")
+//	public int getPayRaise(@RequestBody Employee employee) {
+//		return employeeService.getPayRaisePercent(employee);
+//	}
 	
 	@PostMapping("/payraise")
 	public int getPayRaise(@RequestBody Employee employee) {
-		return employeeService.getPayRaisePercent(employee);
+		return hrEmployeeService.getPayRaisePercent(employee);
 	}
 }

@@ -7,14 +7,14 @@ import hu.webuni.hr.lilla.model.Employee;
 @Service
 public class SalaryService {
 	
-	private EmployeeService employeeService;
+	private HrEmployeeService hrEmployeeService;
 	
-	public SalaryService(EmployeeService employeeService) {
-		this.employeeService = employeeService;
+	public SalaryService(HrEmployeeService hrEmployeeService) {
+		this.hrEmployeeService = hrEmployeeService;
 	}
 	
 	public int getRaisedSalary(Employee employee) {
-		return (int)(employee.getSalary() * (100 + employeeService.getPayRaisePercent(employee)) / 100.0);
+		return (int)(employee.getSalary() * (100 + hrEmployeeService.getPayRaisePercent(employee)) / 100.0);
 		
 	}
 }

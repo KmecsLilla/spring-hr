@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import hu.webuni.hr.lilla.dto.EmployeeDto;
 import hu.webuni.hr.lilla.model.Employee;
 
-@Service
-public class HrEmployeeService {
+//@Service
+public abstract class HrEmployeeService implements EmployeeService {
 
 	private Map<Long, Employee> allEmployee = new HashMap<>();
 	{
@@ -24,9 +24,17 @@ public class HrEmployeeService {
 	}
 	
 	public Employee save(Employee employee) {
-		
 		allEmployee.put(employee.getId(), employee);
 		return employee;		
+	}
+	
+	public Employee modify(Employee employee) {
+		if (allEmployee.containsKey(employee.getId())) {
+			allEmployee.put(employee.getId(), employee);
+			return employee;		
+		} else {
+			return null;
+		}
 	}
 	
 	public List<Employee> findAll() {
