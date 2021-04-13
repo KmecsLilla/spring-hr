@@ -185,14 +185,14 @@ public class CompanyController {
 //	}
 	
 	
-	
 	@PutMapping("/{registrationNumber}")
 	public CompanyDto modifyCompany(@PathVariable long registrationNumber, @RequestBody CompanyDto companyDto) {
-		Company company= findByIdOrThrow(registrationNumber);
+//		Company company= findByIdOrThrow(registrationNumber);
+		Company company= companyMapper.dtoToCompany(companyDto);
 		company.setRegistrationNumber(registrationNumber);
 		hrCompanyService.modify(company);
 		return companyMapper.companyToDto(company);
-		}	
+	}
 
 	
 //2	@DeleteMapping("/{registrationNumber}")
@@ -215,7 +215,6 @@ public class CompanyController {
 //					return ResponseEntity.ok(companyDto);
 //		}
 //	}
-	
 
 	@PostMapping("/{id}/employees")
 	public CompanyDto addNewEmployee(@PathVariable long id, @RequestBody EmployeeDto employeeDto) {
@@ -225,8 +224,8 @@ public class CompanyController {
 		//Employee employee = /hr/src/main/java/hu/webuni/hr/lilla/web/CompanyController.java.employeeMapper.dtoToEmployee(employeeDto);
 		
 		Employee employee = employeeMapper.dtoToEmployee(employeeDto);
-		hrEmployeeService.save(employee);
-		//employeesOfCompany.add(employee);
+		//hrEmployeeService.save(employee);
+		employeesOfCompany.add(employee);
 		
 		hrCompanyService.modify(company); 
 		return companyMapper.companyToDto(company);
