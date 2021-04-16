@@ -33,12 +33,12 @@ public class EmployeeControllerIT {
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
 		
 		assertThat(allEmployeesAfter.subList(0, allEmployeesBefore.size()))
-		.usingFieldByFieldElementComparator()
-		.containsExactlyElementsOf(allEmployeesBefore);
+			.usingFieldByFieldElementComparator()
+			.containsExactlyElementsOf(allEmployeesBefore);
 		
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
-		.usingRecursiveComparison()
-		.isEqualTo(newEmployeeDto);
+			.usingRecursiveComparison()
+			.isEqualTo(newEmployeeDto);
 	}
 
 	private void createEmployee(EmployeeDto newEmployeeDto) {
@@ -61,13 +61,13 @@ public class EmployeeControllerIT {
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
 		
 		assertThat(allEmployeesAfter)
-		.usingFieldByFieldElementComparator()
-		.containsExactlyElementsOf(allEmployeesBefore);
+			.usingFieldByFieldElementComparator()
+			.containsExactlyElementsOf(allEmployeesBefore);
 		
 		
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
-		.usingRecursiveComparison()
-		.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
+			.usingRecursiveComparison()
+			.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
 		
 	}
 
@@ -91,24 +91,24 @@ public class EmployeeControllerIT {
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
 		
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
-		.usingRecursiveComparison()
-		.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
+			.usingRecursiveComparison()
+			.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
 		
 		assertThat(allEmployeesAfter.contains(employeeModifyDto));
 		
 		assertThat(allEmployeesAfter.get((int) employeeModifyDto.getId()-1))
-		.usingRecursiveComparison()
-		.isEqualTo(employeeModifyDto);	
+			.usingRecursiveComparison()
+			.isEqualTo(employeeModifyDto);	
 	}
 
 	private void modifyEmployee(long id, EmployeeDto employeeModifyDto) {
 		webTestClient
-		.put()
-		.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")	
-		.bodyValue(employeeModifyDto)
-		.exchange()
-		.expectStatus()
-		.isOk();
+			.put()
+			.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")	
+			.bodyValue(employeeModifyDto)
+			.exchange()
+			.expectStatus()
+			.isOk();
 	}
 	
 	@Test
@@ -121,25 +121,21 @@ public class EmployeeControllerIT {
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
 		
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
-		.usingRecursiveComparison()
-		.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
+			.usingRecursiveComparison()
+			.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
 		
-		assertFalse(allEmployeesAfter.contains(employeeModifyDto));
-		
-		//assertThat(allEmployeesAfter.get((int) employeeModifyDto.getId()-1))
-		//.usingRecursiveComparison()
-		//.isNotEqualTo(employeeModifyDto);	
+		assertFalse(allEmployeesAfter.contains(employeeModifyDto));	
 	}
 
 
 	private void modifyEmployee_withoutSuccess(long id, EmployeeDto employeeModifyDto) {
 		webTestClient
-		.put()
-		.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")	
-		.bodyValue(employeeModifyDto)
-		.exchange()
-		.expectStatus()
-		.isNotFound();
+			.put()
+			.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")	
+			.bodyValue(employeeModifyDto)
+			.exchange()
+			.expectStatus()
+			.isNotFound();
 		
 	}
 	
