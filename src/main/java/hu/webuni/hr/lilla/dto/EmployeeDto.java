@@ -3,6 +3,8 @@ package hu.webuni.hr.lilla.dto;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 
 public class EmployeeDto {
 	private long id;
@@ -12,7 +14,11 @@ public class EmployeeDto {
 	
 	@NotEmpty
 	private String status;
+	
+	@Positive
 	private int salary;
+	
+	@Past
 	private LocalDateTime startingToWork;
 	
 	public EmployeeDto(long id, String name, String status, int salary, LocalDateTime startingToWork) {

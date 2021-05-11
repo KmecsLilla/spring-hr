@@ -2,8 +2,15 @@ package hu.webuni.hr.lilla.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Employee {
 
+	@Id
+	@GeneratedValue
 	private long id;
 	private String name;
 	private String status;
@@ -11,7 +18,6 @@ public class Employee {
 	private LocalDateTime startingToWork;
 	
 	public Employee(long id, String name, String status, int salary, LocalDateTime startingToWork) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.status = status;
@@ -19,6 +25,12 @@ public class Employee {
 		this.startingToWork = startingToWork;
 	}
 	
+	public Employee() {
+		super();
+	}
+
+
+
 	public long getId() {
 		return id;
 	}
