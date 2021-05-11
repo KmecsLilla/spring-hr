@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import hu.webuni.hr.lilla.config.HrConfigurationProperties;
 import hu.webuni.hr.lilla.model.Employee;
 
-@Service
+//@Service
 public class SmartEmployeeService extends HrEmployeeService {
 
 //	@Value("${hr.employeeaugment.smart3.limit}")

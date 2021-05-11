@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import hu.webuni.hr.lilla.config.HrConfigurationProperties;
 import hu.webuni.hr.lilla.model.Employee;
 
-@Service
+//@Service
 public class DefaultEmployeeService extends HrEmployeeService {
 
 //	@Value("${hr.employeeaugment.def.percent0}")

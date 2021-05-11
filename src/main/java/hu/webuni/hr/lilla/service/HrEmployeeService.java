@@ -15,6 +15,7 @@ import hu.webuni.hr.lilla.model.Employee;
 import hu.webuni.hr.lilla.repository.EmployeeRepository;
 
 ////@Service nem itt valósítottam meg a Service-t, hanem lejjebb, duplakommentbe a SPRING DATA bevezetése miatt került (a többieknél szimpla komment)
+@Service
 public abstract class HrEmployeeService implements EmployeeService {
 
 //	private Map<Long, Employee> allEmployee = new HashMap<>();
