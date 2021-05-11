@@ -75,6 +75,11 @@ public abstract class HrEmployeeService implements EmployeeService {
 	public List<Employee> findAll() {
 		return employeeRepository.findAll();
 	}
+	
+	@Override
+	public List<Employee> findBySalaryGreaterThan(Integer minSalary) {
+		return employeeRepository.findBySalaryGreaterThan(minSalary);
+	}
 
 	@Override
 	public Optional<Employee> findById(long id) {

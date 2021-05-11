@@ -19,6 +19,8 @@ public interface EmployeeService {
 	
 	public List<Employee> findAll();
 	
+	public List<Employee> findBySalaryGreaterThan(Integer minSalary);
+	
 	public Optional<Employee> findById(long id);
 	
 	public void delete(long id);

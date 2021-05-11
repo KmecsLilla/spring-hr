@@ -299,9 +299,7 @@ public class EmployeeController {
 		if (minSalary == null) {
 			return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findAll());
 		} else {
-			return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findAll()).stream()
-				.filter(e -> e.getSalary() > minSalary)
-				.collect(Collectors.toList());
+			return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findBySalaryGreaterThan(minSalary));
 		}
 	}
 	
