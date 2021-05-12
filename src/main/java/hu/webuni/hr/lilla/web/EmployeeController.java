@@ -3,6 +3,7 @@ package hu.webuni.hr.lilla.web;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -323,11 +324,21 @@ public class EmployeeController {
 		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findByNameStartingWithIgnoreCase(nameStartingWith));		
 	}
 
-	@PostMapping("/filterstartingtowork")
-	public List<EmployeeDto> getEmployeesByStartingToWork(@RequestBody @Valid IntervalDto intervalDto) {
+//	@PostMapping("/filterstartingtowork")
+//	public List<EmployeeDto> getEmployeesByStartingToWork(@RequestBody @Valid IntervalDto intervalDto) {
+//		return employeeMapper
+//				.allEmployeeToEmployeeDtos(hrEmployeeService
+//						.findByStartingToWorkBetween(intervalDto.getStartDate(), intervalDto.getEndDate()));		
+//	}
+	
+	@GetMapping("/filterstartingtowork")
+	public List<EmployeeDto> getEmployeesByStartingToWork(@RequestParam String startDateStr, @RequestParam String endDateStr) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime startDate = LocalDateTime.parse(startDateStr, formatter);
+		LocalDateTime endDate = LocalDateTime.parse(endDateStr, formatter);
 		return employeeMapper
 				.allEmployeeToEmployeeDtos(hrEmployeeService
-						.findByStartingToWorkBetween(intervalDto.getStartDate(), intervalDto.getEndDate()));		
+						.findByStartingToWorkBetween(startDate, endDate));		
 	}
 
 	
