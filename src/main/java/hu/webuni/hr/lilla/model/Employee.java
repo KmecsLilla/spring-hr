@@ -1,10 +1,14 @@
 package hu.webuni.hr.lilla.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Employee {
@@ -15,6 +19,8 @@ public class Employee {
 	private String name;
 	private String status;
 	private int salary;
+	//@Temporal(TemporalType.TIMESTAMP)
+	//@Basic
 	private LocalDateTime startingToWork;
 	
 	public Employee(long id, String name, String status, int salary, LocalDateTime startingToWork) {

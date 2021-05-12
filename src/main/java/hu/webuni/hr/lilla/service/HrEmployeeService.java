@@ -1,5 +1,6 @@
 package hu.webuni.hr.lilla.service;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +87,22 @@ public abstract class HrEmployeeService implements EmployeeService {
 	public Optional<Employee> findById(long id) {
 		return employeeRepository.findById(id);
 	}
-
+	
+	@Override 
+	public List<Employee> findByStatus(String status) {
+		return employeeRepository.findByStatus(status);
+	}
+	
+	@Override 
+	public List<Employee> findByNameStartingWithIgnoreCase(String nameStartingWith){
+		return employeeRepository.findByNameStartingWithIgnoreCase(nameStartingWith);
+	}
+	
+	@Override 
+	public List<Employee> findByStartingToWorkBetween(LocalDateTime startDate, LocalDateTime endDate) {
+		return employeeRepository.findByStartingToWorkBetween(startDate, endDate);
+	}
+	
 	@Override
 	public void delete(long id) {
 		employeeRepository.deleteById(id);

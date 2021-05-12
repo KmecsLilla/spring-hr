@@ -1,5 +1,7 @@
 package hu.webuni.hr.lilla.service;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,12 @@ public interface EmployeeService {
 	public List<Employee> findAll();
 	
 	public List<Employee> findBySalaryGreaterThan(Integer minSalary);
+	
+	public List<Employee> findByStatus(String status);
+	
+	public List<Employee> findByNameStartingWithIgnoreCase(String nameStartingWith);
+	
+	public List<Employee> findByStartingToWorkBetween(LocalDateTime startDate, LocalDateTime endDate);
 	
 	public Optional<Employee> findById(long id);
 	

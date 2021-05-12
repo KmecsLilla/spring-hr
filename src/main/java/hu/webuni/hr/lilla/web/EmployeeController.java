@@ -1,5 +1,7 @@
 package hu.webuni.hr.lilla.web;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -309,7 +311,26 @@ public class EmployeeController {
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)));
 		return employeeDto;			
 	}
+	
+	@GetMapping("/status/{status}")
+	public List<EmployeeDto> getEmployeesByStatus(@PathVariable String status) {
+		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findByStatus(status));		
+	}
+	
+	@GetMapping("/namestartingwith/{nameStartingWith}")
+	public List<EmployeeDto> getEmployeesByNameStartingWith(@PathVariable String nameStartingWith) {
+		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findByNameStartingWithIgnoreCase(nameStartingWith));		
+	}
 
+	@GetMapping("/filterStartingToWork/{startingToWork}")
+	public List<EmployeeDto> getEmployeesByStartingToWork
+	(@PathVariable LocalDateTime startingToWork, LocalDateTime startDate, LocalDateTime endDate ) {
+		return employeeMapper
+				.allEmployeeToEmployeeDtos(hrEmployeeService
+						.findByStartingToWorkBetween(startDate,endDate));		
+	}
+
+	
 	@PostMapping
 	public EmployeeDto createEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
 		Employee employee = employeeMapper.dtoToEmployee(employeeDto);
