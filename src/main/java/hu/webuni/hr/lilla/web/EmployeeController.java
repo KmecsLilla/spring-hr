@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.hr.lilla.dto.EmployeeDto;
+import hu.webuni.hr.lilla.dto.IntervalDto;
 import hu.webuni.hr.lilla.mapper.EmployeeMapper;
 import hu.webuni.hr.lilla.model.Employee;
 import hu.webuni.hr.lilla.service.EmployeeService;
@@ -322,12 +323,11 @@ public class EmployeeController {
 		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findByNameStartingWithIgnoreCase(nameStartingWith));		
 	}
 
-	@GetMapping("/filterStartingToWork/{startingToWork}")
-	public List<EmployeeDto> getEmployeesByStartingToWork
-	(@PathVariable LocalDateTime startingToWork, LocalDateTime startDate, LocalDateTime endDate ) {
+	@PostMapping("/filterstartingtowork")
+	public List<EmployeeDto> getEmployeesByStartingToWork(@RequestBody @Valid IntervalDto intervalDto) {
 		return employeeMapper
 				.allEmployeeToEmployeeDtos(hrEmployeeService
-						.findByStartingToWorkBetween(startDate,endDate));		
+						.findByStartingToWorkBetween(intervalDto.getStartDate(), intervalDto.getEndDate()));		
 	}
 
 	
