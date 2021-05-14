@@ -3,6 +3,7 @@ package hu.webuni.hr.lilla.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -111,7 +112,7 @@ public class Company {
 	
 	private String address;
 	
-	@OneToMany(mappedBy = "company")
+	@OneToMany(mappedBy = "company", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Employee> employeesOfCompany;
 	
 	public Company(long id, long registrationNumber, String name, String address, List<Employee> employeesOfCompany) {
@@ -182,9 +183,9 @@ public class Company {
 	public void addEmployeesOfCompany(Employee employee) {
 		if (this.employeesOfCompany == null) {
 			this.employeesOfCompany = new ArrayList<>();
-			employeesOfCompany.add(employee);
-			employee.setCompany(this);
 		}
+		employeesOfCompany.add(employee);
+		employee.setCompany(this);
 	}
 }
 

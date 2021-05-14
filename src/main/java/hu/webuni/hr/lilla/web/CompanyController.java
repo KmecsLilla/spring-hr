@@ -515,8 +515,8 @@ public class CompanyController {
 		
 	@PutMapping("/{id}")
 	public ResponseEntity<CompanyDto> modifyCompany(@PathVariable long id, @RequestBody CompanyDto companyDto) {
+		companyDto.setId(id);
 		Company updatedCompany= companyMapper.dtoToCompany(companyDto);
-		updatedCompany.setId(id);
 		hrCompanyService.update(updatedCompany);
 		if(updatedCompany == null) {
 			ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -542,11 +542,13 @@ public class CompanyController {
 //		return companyMapper.companyToDto(company);
 //   	}
 	
-	@PostMapping("/{id}/employees")
-	public CompanyDto addNewEmployee(@PathVariable long id, @RequestBody EmployeeDto employeeDto) {
-		Company company = findByIdOrThrow(id);
+	@PostMapping("/{companyId}/employees")
+	public CompanyDto addNewEmployee(@PathVariable long companyId, @RequestBody EmployeeDto employeeDto) {
 		try {
-			return companyMapper.companyToDto(hrCompanyService.addEmployee(id, employeeMapper.dtoToEmployee(employeeDto)));
+			Employee employee = employeeMapper.dtoToEmployee(employeeDto);
+			Company company = hrCompanyService.addEmployee(companyId, employee);
+			CompanyDto companyDto = companyMapper.companyToDto(company);
+			return companyDto;
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
