@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,6 +24,11 @@ public class Employee {
 	//@Basic
 	private LocalDateTime startingToWork;
 	
+	
+
+	@ManyToOne
+	private Company company;
+	
 	public Employee(long id, String name, String status, int salary, LocalDateTime startingToWork) {
 		this.id = id;
 		this.name = name;
@@ -34,8 +40,6 @@ public class Employee {
 	public Employee() {
 		super();
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -77,6 +81,13 @@ public class Employee {
 		this.startingToWork = startingToWork;
 	}
 	
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 	
 }
 
