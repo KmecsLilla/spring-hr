@@ -104,11 +104,21 @@ public class CompanyController {
 	}
 
 	@PutMapping("/{id}/employees")
-	public CompanyDto replaceEmployees(@PathVariable long id, @RequestBody List<EmployeeDto> employeeDtos) {
+	public CompanyDto replaceEmployees(@PathVariable long id, @RequestBody List<EmployeeDto> employees) {
+//		try {
+//			return companyMapper.companyToDto(
+//					hrCompanyService.replaceEmployees(
+//							id, employeeMapper.allEmployeeDtosToEmployee(employees)
+//							)
+//					);
+//
+//		} catch (NoSuchElementException e) {
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//		}
+
 		Company company = findByIdOrThrow(id);
-		List<Employee> employees = employeeMapper.allEmployeeDtosToEmployee(employeeDtos);
-		company.setEmployees(employees);
-		hrCompanyService.update(company);
+		List<Employee> replacedEmployees = employeeMapper.allEmployeeDtosToEmployee(employees);
+		hrCompanyService.replaceEmployees(id, replacedEmployees);
 		CompanyDto result = companyMapper.companyToDto(company);
 		return result;
 	}

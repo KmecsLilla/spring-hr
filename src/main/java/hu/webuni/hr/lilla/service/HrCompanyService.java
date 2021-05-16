@@ -1,6 +1,7 @@
 package hu.webuni.hr.lilla.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,25 @@ public class HrCompanyService {
 	}
 
 	public Company deleteEmployee(long id, long employeeId) {
-		Company company = companyRepository.findById(id).get();//.orElseThrow(()-> new NoSuchElementException());
+		Company company = companyRepository.findById(id).get();
 		Employee employee = employeeRepository.findById(employeeId).get();
 		employee.setCompany(null);
 		company.getEmployees().remove(employee);
 		employeeRepository.save(employee);
+		return company;
+	}
+
+	public Company replaceEmployees(long id, List<Employee> employees) {
+		Company company = companyRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+		company.getEmployees().stream().forEach(e -> {
+			e.setCompany(null);
+		});
+		company.getEmployees().clear();
+
+		for (Employee employee : employees) {
+			company.addEmployee(employee);
+			employeeRepository.save(employee);
+		}
 		return company;
 	}
 }
