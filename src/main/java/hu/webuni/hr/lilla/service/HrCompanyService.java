@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 import hu.webuni.hr.lilla.model.Company;
 import hu.webuni.hr.lilla.model.Employee;
 import hu.webuni.hr.lilla.repository.CompanyRepository;
+import hu.webuni.hr.lilla.repository.EmployeeRepository;
 
 @Service
 public class HrCompanyService {
 	@Autowired
 	CompanyRepository companyRepository;
+
+	@Autowired
+	EmployeeRepository employeeRepository;
 
 	public Company save(Company company) {
 		return companyRepository.save(company);
@@ -42,7 +46,8 @@ public class HrCompanyService {
 	public Company addEmployee(long companyId, Employee employee) {
 		Company company = companyRepository.findById(companyId).get();
 		company.addEmployee(employee);
-		companyRepository.save(company);
+		// companyRepository.save(company); cascade-dal működik
+		employeeRepository.save(employee);
 		return company;
 	}
 }
