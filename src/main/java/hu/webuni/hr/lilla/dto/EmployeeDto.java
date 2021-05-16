@@ -21,6 +21,8 @@ public class EmployeeDto {
 	@Past
 	private LocalDateTime startingToWork;
 
+	private String companyName;
+
 	public EmployeeDto(long id, String name, String status, int salary, LocalDateTime startingToWork) {
 		super();
 		this.id = id;
@@ -72,4 +74,14 @@ public class EmployeeDto {
 	public void setStartingToWork(LocalDateTime startingToWork) {
 		this.startingToWork = startingToWork;
 	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+
 }
