@@ -1,6 +1,5 @@
 package hu.webuni.hr.lilla.web;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -100,14 +99,7 @@ public class CompanyController {
 
 	@DeleteMapping("/{id}/employee/{employeeId}")
 	public CompanyDto deleteEmployee(@PathVariable long id, @PathVariable long employeeId) {
-		Company company = findByIdOrThrow(id);
-		for (Iterator<Employee> iterator = company.getEmployees().iterator(); iterator.hasNext();) {
-			Employee employee = iterator.next();
-			if (employee.getId() == employeeId) {
-				iterator.remove();
-				break;
-			}
-		}
+		Company company = hrCompanyService.deleteEmployee(id, employeeId);
 		return companyMapper.companyToDto(company);
 	}
 

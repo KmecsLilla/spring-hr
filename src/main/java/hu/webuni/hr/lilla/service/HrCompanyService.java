@@ -50,4 +50,13 @@ public class HrCompanyService {
 		employeeRepository.save(employee);
 		return company;
 	}
+
+	public Company deleteEmployee(long id, long employeeId) {
+		Company company = companyRepository.findById(id).get();//.orElseThrow(()-> new NoSuchElementException());
+		Employee employee = employeeRepository.findById(employeeId).get();
+		employee.setCompany(null);
+		company.getEmployees().remove(employee);
+		employeeRepository.save(employee);
+		return company;
+	}
 }
