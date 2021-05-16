@@ -53,7 +53,7 @@ public class CompanyController {
 	}
 
 	@GetMapping("/{id}")
-	public CompanyDto getCompanyByRegistrationNumber(@PathVariable long id, @RequestParam(required = false) Boolean full) {
+	public CompanyDto getCompanyById(@PathVariable long id, @RequestParam(required = false) Boolean full) {
 		Company company = findByIdOrThrow(id);
 		if (full != null && full) {
 			return companyMapper.companyToDto(company);
@@ -82,7 +82,7 @@ public class CompanyController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void removeCompanyByRegistrationNumber(@PathVariable long id) {
+	public void removeCompanyById(@PathVariable long id) {
 		hrCompanyService.delete(id);
 	}
 
