@@ -73,8 +73,7 @@ public class EmployeeController {
 	@PostMapping
 	public EmployeeDto createEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
 		Employee employee = employeeMapper.dtoToEmployee(employeeDto);
-		hrEmployeeService.save(employee);
-		return employeeDto;
+		return employeeMapper.employeeToDto(hrEmployeeService.save(employee));
 	}
 
 	@PutMapping("/{id}")
