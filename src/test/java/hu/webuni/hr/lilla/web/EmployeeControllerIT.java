@@ -22,22 +22,23 @@ public class EmployeeControllerIT {
 
 	@Autowired
 	WebTestClient webTestClient;
-	
+
 	@Test
 	void testThatCreatedEmployeeIsListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
-		
+
 		EmployeeDto newEmployeeDto = new EmployeeDto(10L,"Kutyafülű Aladár", "ebmarketing menedzser", 700_000, LocalDateTime.of(2011,1,4,1,1,1));
 		createEmployee(newEmployeeDto);
-		
+
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
-		
+
 		assertThat(allEmployeesAfter.subList(0, allEmployeesBefore.size()))
 			.usingFieldByFieldElementComparator()
 			.containsExactlyElementsOf(allEmployeesBefore);
-		
+
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
 			.usingRecursiveComparison()
+			.ignoringFields("id")
 			.isEqualTo(newEmployeeDto);
 	}
 
@@ -50,25 +51,25 @@ public class EmployeeControllerIT {
 			.expectStatus()
 			.isOk();
 	}
-	
+
 	@Test
 	void testThatCreatedEmployeeIsNotListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
-		
+
 		EmployeeDto newEmployeeDto = new EmployeeDto(11L,"", "", 600_000, LocalDateTime.of(2013,1,4,1,1,1));
 		createEmployee_withoutSuccess(newEmployeeDto);
-		
+
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
-		
+
 		assertThat(allEmployeesAfter)
 			.usingFieldByFieldElementComparator()
 			.containsExactlyElementsOf(allEmployeesBefore);
-		
-		
+
+
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
 			.usingRecursiveComparison()
 			.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
-		
+
 	}
 
 	private void createEmployee_withoutSuccess(EmployeeDto newEmployeeDto) {
@@ -80,65 +81,65 @@ public class EmployeeControllerIT {
 			.expectStatus()
 			.isBadRequest();
 	}
-	
+
 	@Test
 	void testThatModifiedEmployeeIsNotListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
-		
+
 		EmployeeDto employeeModifyDto = new EmployeeDto(1L,"Genovéva", "köztisztasági menedzser", 400_000, LocalDateTime.of(2013,1,4,1,1,1));
 				modifyEmployee(employeeModifyDto.getId(), employeeModifyDto);
 
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
-		
+
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
 			.usingRecursiveComparison()
 			.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
-		
+
 		assertThat(allEmployeesAfter.contains(employeeModifyDto));
-		
+
 		assertThat(allEmployeesAfter.get((int) employeeModifyDto.getId()-1))
 			.usingRecursiveComparison()
-			.isEqualTo(employeeModifyDto);	
+			.isEqualTo(employeeModifyDto);
 	}
 
 	private void modifyEmployee(long id, EmployeeDto employeeModifyDto) {
 		webTestClient
 			.put()
-			.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")	
+			.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")
 			.bodyValue(employeeModifyDto)
 			.exchange()
 			.expectStatus()
 			.isOk();
 	}
-	
+
 	@Test
 	void testThatModifiedEmployeeIsListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
-		
+
 		EmployeeDto employeeModifyDto = new EmployeeDto(100L,"Borbála", "csoportvezető", 600_000, LocalDateTime.of(2013,1,4,1,1,1));
 				modifyEmployee_withoutSuccess(employeeModifyDto.getId(), employeeModifyDto);
 
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
-		
+
 		assertThat(allEmployeesAfter.get(allEmployeesAfter.size()-1))
 			.usingRecursiveComparison()
 			.isEqualTo(allEmployeesAfter.get(allEmployeesBefore.size()-1));
-		
-		assertFalse(allEmployeesAfter.contains(employeeModifyDto));	
+
+		assertFalse(allEmployeesAfter.contains(employeeModifyDto));
 	}
 
 
 	private void modifyEmployee_withoutSuccess(long id, EmployeeDto employeeModifyDto) {
 		webTestClient
 			.put()
-			.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")	
+			.uri(BASE_URI + "/" + id)		//(BASE_URI+ /"{id}")("/api/employees/{id}")
 			.bodyValue(employeeModifyDto)
 			.exchange()
 			.expectStatus()
 			.isNotFound();
-		
+
 	}
-	
+
 	private List<EmployeeDto> getAllEmployees() {
 		List<EmployeeDto> responseList = webTestClient
 			.get()
@@ -147,13 +148,13 @@ public class EmployeeControllerIT {
 			.expectStatus().isOk()
 			.expectBodyList(EmployeeDto.class)
 			.returnResult().getResponseBody();
-		
+
 		Collections.sort(responseList, (e1, e2) -> Long.compare(e1.getId(), e2.getId()));
-			
+
 		return responseList;
 	}
-	
-	
+
+
 }
 
 //Írj integrációs teszteket a következő végpontokhoz!
