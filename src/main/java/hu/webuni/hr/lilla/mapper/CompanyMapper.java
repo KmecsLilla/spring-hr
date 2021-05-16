@@ -14,7 +14,7 @@ import hu.webuni.hr.lilla.model.Company;
 public interface CompanyMapper {
 	CompanyDto companyToDto(Company company);
 
-	@Mapping(target = "employeesOfCompany", ignore = true)
+	@Mapping(target = "employees", ignore = true)
 	@Named("summary")
 	CompanyDto companySummaryToDto(Company company);
 
@@ -23,6 +23,6 @@ public interface CompanyMapper {
 	List<CompanyDto> companyToCompanyDtos(List<Company> allCompany);
 
 	@IterableMapping(qualifiedByName = "summary")
-	@Mapping(target = "employeesOfCompany", ignore = true)
+	@Mapping(target = "employees", ignore = true)
 	List<CompanyDto> companySummaryToCompanyDtos(List<Company> allCompany);
 }
