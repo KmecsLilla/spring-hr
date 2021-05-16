@@ -10,9 +10,7 @@ import hu.webuni.hr.lilla.service.EmployeeService;
 @Configuration
 @Profile("def")
 public class DefConfiguration {
-	
-	
-	@Bean 
+	@Bean
 	public EmployeeService employeeService() {
 		return new DefaultEmployeeService();
 	}

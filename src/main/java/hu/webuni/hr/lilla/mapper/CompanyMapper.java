@@ -12,15 +12,14 @@ import hu.webuni.hr.lilla.model.Company;
 
 @Mapper(componentModel="spring")
 public interface CompanyMapper {
-
 	CompanyDto companyToDto(Company company);
-	
+
 	@Mapping(target = "employeesOfCompany", ignore = true)
 	@Named("summary")
 	CompanyDto companySummaryToDto(Company company);
 
 	Company dtoToCompany(CompanyDto companyDto);
-	
+
 	List<CompanyDto> companyToCompanyDtos(List<Company> allCompany);
 
 	@IterableMapping(qualifiedByName = "summary")

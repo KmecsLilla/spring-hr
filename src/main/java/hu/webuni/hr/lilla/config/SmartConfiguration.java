@@ -10,8 +10,7 @@ import hu.webuni.hr.lilla.service.SmartEmployeeService;
 @Configuration
 @Profile("smart")
 public class SmartConfiguration {
-	
-	@Bean 
+	@Bean
 	public HrEmployeeService hrEmployeeService() {
 		return new SmartEmployeeService();
 	}
