@@ -113,14 +113,14 @@ public class Company {
 	private String address;
 	
 	@OneToMany(mappedBy = "company", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private List<Employee> employeesOfCompany;
+	private List<Employee> employees;
 	
-	public Company(long id, long registrationNumber, String name, String address, List<Employee> employeesOfCompany) {
+	public Company(long id, long registrationNumber, String name, String address, List<Employee> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
-		this.employeesOfCompany = employeesOfCompany;
+		this.employees = employees;
 	}
 			
 //		public CompanyDto(long id, long registrationNumber, String name, String address) {
@@ -172,19 +172,19 @@ public class Company {
 		this.address = address;
 	}
 
-	public List<Employee> getEmployeesOfCompany() {
-		return employeesOfCompany;
+	public List<Employee> getEmployees() {
+		return employees;
 	}
 
-	public void setEmployeesOfCompany(List<Employee> employeesOfCompany) {
-		this.employeesOfCompany = employeesOfCompany;
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 	
-	public void addEmployeesOfCompany(Employee employee) {
-		if (this.employeesOfCompany == null) {
-			this.employeesOfCompany = new ArrayList<>();
+	public void addEmployee(Employee employee) {
+		if (this.employees == null) {
+			this.employees = new ArrayList<>();
 		}
-		employeesOfCompany.add(employee);
+		employees.add(employee);
 		employee.setCompany(this);
 	}
 }

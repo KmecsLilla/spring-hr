@@ -18,14 +18,14 @@ public class CompanyDto {
 	@JsonView(Views.BaseData.class)
 	private String address;
 	
-	private List<EmployeeDto> employeesOfCompany;
+	private List<EmployeeDto> employees;
 	
-	public CompanyDto(long id, long registrationNumber, String name, String address, List<EmployeeDto> employeesOfCompany) {
+	public CompanyDto(long id, long registrationNumber, String name, String address, List<EmployeeDto> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
-		this.employeesOfCompany = employeesOfCompany;
+		this.employees = employees;
 	}
 		
 //	public CompanyDto(long id, long registrationNumber, String name, String address) {
@@ -80,12 +80,12 @@ public class CompanyDto {
 		this.address = address;
 	}
 
-	public List<EmployeeDto> getEmployeesOfCompany() {
-		return employeesOfCompany;
+	public List<EmployeeDto> getEmployees() {
+		return employees;
 	}
 
-	public void setEmployeesOfCompany(List<EmployeeDto> employeesOfCompany) {
-		this.employeesOfCompany = employeesOfCompany;
+	public void setEmployeesOfCompany(List<EmployeeDto> employees) {
+		this.employees = employees;
 	}
 	
 }

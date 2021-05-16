@@ -557,7 +557,7 @@ public class CompanyController {
 	@DeleteMapping("/{id}/employee/{employeeId}")
 	public CompanyDto deleteEmployee(@PathVariable long id, @PathVariable long employeeId) {
 		Company company = findByIdOrThrow(id);
-		for (Iterator<Employee> iterator = company.getEmployeesOfCompany().iterator(); iterator.hasNext();) {
+		for (Iterator<Employee> iterator = company.getEmployees().iterator(); iterator.hasNext();) {
 			Employee employee = iterator.next();
 			if (employee.getId() == employeeId) {
 				iterator.remove();
@@ -571,7 +571,7 @@ public class CompanyController {
 	public CompanyDto replaceEmployees(@PathVariable long id, @RequestBody List<EmployeeDto> employeeDtos) {
 		Company company = findByIdOrThrow(id);
 		List<Employee> employees = employeeMapper.allEmployeeDtosToEmployee(employeeDtos);
-		company.setEmployeesOfCompany(employees);
+		company.setEmployees(employees);
 		hrCompanyService.update(company);
 		CompanyDto result = companyMapper.companyToDto(company);
 		return result;

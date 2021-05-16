@@ -94,7 +94,7 @@ public class HrCompanyService {
 
 	public Company addEmployee(long companyId, Employee employee) {
 		Company company = companyRepository.findById(companyId).get();
-		company.addEmployeesOfCompany(employee);
+		company.addEmployee(employee);
 		companyRepository.save(company);
 		return company;
 	}
