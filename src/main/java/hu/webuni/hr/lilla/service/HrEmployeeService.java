@@ -43,9 +43,10 @@ public abstract class HrEmployeeService implements EmployeeService {
 		return employeeRepository.findById(id);
 	}
 
+
 	@Override
-	public List<Employee> findByStatus(String status) {
-		return employeeRepository.findByStatus(status);
+	public List<Employee> findByPositionName(String status) {
+		return employeeRepository.findByPositionName(status);
 	}
 
 	@Override

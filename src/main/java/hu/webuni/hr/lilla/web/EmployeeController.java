@@ -63,7 +63,7 @@ public class EmployeeController {
 
 	@GetMapping("/status/{status}")
 	public List<EmployeeDto> getEmployeesByStatus(@PathVariable String status) {
-		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findByStatus(status));
+		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findByPositionName(status));
 	}
 
 	@GetMapping("/namestartingwith/{nameStartingWith}")

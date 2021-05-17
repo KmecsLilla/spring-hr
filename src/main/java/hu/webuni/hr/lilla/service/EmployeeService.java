@@ -25,7 +25,7 @@ public interface EmployeeService {
 
 	public List<Employee> findBySalaryGreaterThan(Integer minSalary);
 
-	public List<Employee> findByStatus(String status);
+	public List<Employee> findByPositionName(String status);
 
 	public List<Employee> findByNameStartingWithIgnoreCase(String nameStartingWith);
 

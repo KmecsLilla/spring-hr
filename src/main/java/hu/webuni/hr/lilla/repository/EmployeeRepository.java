@@ -12,7 +12,7 @@ import hu.webuni.hr.lilla.model.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	Page<Employee> findBySalaryGreaterThan(Integer minSalary, Pageable pageable);
 
-	List<Employee> findByStatus(String status);
+	List<Employee> findByPositionName(String status);
 
 	List<Employee> findByNameStartingWithIgnoreCase(String nameStartingWith);
 

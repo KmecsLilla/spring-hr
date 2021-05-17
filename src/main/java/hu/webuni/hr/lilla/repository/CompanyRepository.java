@@ -15,11 +15,11 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 	@Query("SELECT c FROM Company c WHERE Size(c.employees) > :minEmployeeCount")
 	public List<Company> findEmployeeCountHigherThan(int minEmployeeCount);
 
-	@Query("SELECT e.status AS position, AVG(e.salary) AS averageSalary " //"SELECT new hu.webuni.hr.lilla.model.MyModel(e.status, AVG(e.salary))" ekkor List<MyModel >metódusban
+	@Query("SELECT e.position.name AS position, AVG(e.salary) AS averageSalary " //"SELECT new hu.webuni.hr.lilla.model.MyModel(e.status, AVG(e.salary))" ekkor List<MyModel >metódusban
 			+ "FROM Company c "
 			+ "JOIN c.employees e "
 			+ "WHERE c.id = :companyId "
-			+ "GROUP BY e.status " //e.status
+			+ "GROUP BY e.position.name " //e.status
 			+ "ORDER BY AVG(e.salary) DESC")
 	public List <AverageSalaryByPosition> findAverageSalariesByPosition(long companyId);
 
