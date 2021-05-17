@@ -79,4 +79,9 @@ public class HrCompanyService {
 		List<Company> foundCompanies = companyRepository.findEmployeeWithSalaryHigherThan(aboveSalary);
 		return foundCompanies;
 	}
+
+	public List<Company> findEmployeeCountHigherThan(int aboveEmployeeNumber) {
+		List<Company> foundCompanies = companyRepository.findEmployeeCountHigherThan(aboveEmployeeNumber);
+		return foundCompanies;
+	}
 }

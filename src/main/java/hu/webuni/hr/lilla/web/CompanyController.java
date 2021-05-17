@@ -139,4 +139,15 @@ public class CompanyController {
 			return companyMapper.companyToCompanyDtos(allCompanies);
 		}
 	}
+
+	@GetMapping(params = "aboveEmployeeNumber")
+	public List<CompanyDto> getCompaniesAboveEmployeeNumber(@RequestParam int aboveEmployeeNumber,
+			@RequestParam(required=false) String full) {
+		List<Company> allCompanies = hrCompanyService.findEmployeeCountHigherThan(aboveEmployeeNumber);
+		if (full == null || full.equals("false")) {
+			return companyMapper.companySummaryToCompanyDtos(allCompanies);
+		} else {
+			return companyMapper.companyToCompanyDtos(allCompanies);
+		}
+	}
 }
