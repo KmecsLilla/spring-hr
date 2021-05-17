@@ -2,6 +2,7 @@ package hu.webuni.hr.lilla.service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,5 +28,11 @@ public class SmartEmployeeService extends HrEmployeeService {
 		} else {
 			return 0;
 		}
+	}
+
+	@Override
+	public List<Employee> findBySalaryGreaterThan(Integer minSalary) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

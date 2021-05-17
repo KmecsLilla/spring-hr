@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import hu.webuni.hr.lilla.model.Employee;
@@ -34,10 +36,7 @@ public abstract class HrEmployeeService implements EmployeeService {
 		return employeeRepository.findAll();
 	}
 
-	@Override
-	public List<Employee> findBySalaryGreaterThan(Integer minSalary) {
-		return employeeRepository.findBySalaryGreaterThan(minSalary);
-	}
+
 
 	@Override
 	public Optional<Employee> findById(long id) {
@@ -64,4 +63,8 @@ public abstract class HrEmployeeService implements EmployeeService {
 		employeeRepository.deleteById(id);
 	}
 
+	@Override
+	public Page<Employee> findBySalaryGreaterThan(Integer minSalary, Pageable pageable) {
+		return employeeRepository.findBySalaryGreaterThan(minSalary, pageable);
+	}
 }

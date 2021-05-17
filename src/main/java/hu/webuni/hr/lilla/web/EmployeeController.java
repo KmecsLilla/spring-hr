@@ -7,6 +7,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,12 +37,21 @@ public class EmployeeController {
 	EmployeeMapper employeeMapper;
 
 	@GetMapping
-	public List<EmployeeDto> getEmployees(@RequestParam(required = false) Integer minSalary) {
+	public List<EmployeeDto> getEmployees(@RequestParam(required = false) Integer minSalary, Pageable pageable) {
+		List<Employee> employees = null;
 		if (minSalary == null) {
 			return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findAll());
 		} else {
-			return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findBySalaryGreaterThan(minSalary));
+			Page<Employee> page = hrEmployeeService.findBySalaryGreaterThan(minSalary, pageable);
+			employees = page.getContent();
+			System.out.println(page.getNumber());
+			System.out.println(page.getNumberOfElements());
+			System.out.println(page.getSize());
+			System.out.println(page.getTotalElements());
+			System.out.println(page.getTotalPages());
+			System.out.println(page.isFirst());
 		}
+		return employeeMapper.allEmployeeToEmployeeDtos(employees);
 	}
 
 	@GetMapping("/{id}")

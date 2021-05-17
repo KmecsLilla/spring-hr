@@ -6,6 +6,9 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import hu.webuni.hr.lilla.model.Employee;
 
 public interface EmployeeService {
@@ -31,5 +34,7 @@ public interface EmployeeService {
 	public Optional<Employee> findById(long id);
 
 	public void delete(long id);
+
+	Page<Employee> findBySalaryGreaterThan(Integer minSalary, Pageable pageable);
 
 }
