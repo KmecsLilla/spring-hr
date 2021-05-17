@@ -21,6 +21,7 @@ import hu.webuni.hr.lilla.dto.CompanyDto;
 import hu.webuni.hr.lilla.dto.EmployeeDto;
 import hu.webuni.hr.lilla.mapper.CompanyMapper;
 import hu.webuni.hr.lilla.mapper.EmployeeMapper;
+import hu.webuni.hr.lilla.model.AverageSalaryByPosition;
 import hu.webuni.hr.lilla.model.Company;
 import hu.webuni.hr.lilla.model.Employee;
 import hu.webuni.hr.lilla.service.HrCompanyService;
@@ -129,9 +130,9 @@ public class CompanyController {
 		return company;
 	}
 
-	@GetMapping(params="aboveSalary")
+	@GetMapping(params = "aboveSalary")
 	public List<CompanyDto> getCompaniesAboveSalary(@RequestParam int aboveSalary,
-			@RequestParam(required=false) String full) {
+			@RequestParam(required = false) String full) {
 		List<Company> allCompanies = hrCompanyService.findByEmployeeWithSalaryHigherThan(aboveSalary);
 		if (full == null || full.equals("false")) {
 			return companyMapper.companySummaryToCompanyDtos(allCompanies);
@@ -142,12 +143,18 @@ public class CompanyController {
 
 	@GetMapping(params = "aboveEmployeeNumber")
 	public List<CompanyDto> getCompaniesAboveEmployeeNumber(@RequestParam int aboveEmployeeNumber,
-			@RequestParam(required=false) String full) {
+			@RequestParam(required = false) String full) {
 		List<Company> allCompanies = hrCompanyService.findEmployeeCountHigherThan(aboveEmployeeNumber);
 		if (full == null || full.equals("false")) {
 			return companyMapper.companySummaryToCompanyDtos(allCompanies);
 		} else {
 			return companyMapper.companyToCompanyDtos(allCompanies);
 		}
+	}
+
+	@GetMapping("/{id}/salaryStats")
+	public List<AverageSalaryByPosition> getSalaryStatsByPosition(@PathVariable long id,
+			@RequestParam(required = false) String full) {
+		return hrCompanyService.findAverageSalariesByPosition(id);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hu.webuni.hr.lilla.model.AverageSalaryByPosition;
 import hu.webuni.hr.lilla.model.Company;
 import hu.webuni.hr.lilla.model.Employee;
 import hu.webuni.hr.lilla.repository.CompanyRepository;
@@ -83,5 +84,10 @@ public class HrCompanyService {
 	public List<Company> findEmployeeCountHigherThan(int aboveEmployeeNumber) {
 		List<Company> foundCompanies = companyRepository.findEmployeeCountHigherThan(aboveEmployeeNumber);
 		return foundCompanies;
+	}
+
+	public List<AverageSalaryByPosition> findAverageSalariesByPosition(long id) {
+		List<AverageSalaryByPosition> averageSalaries = companyRepository.findAverageSalariesByPosition(id);
+		return averageSalaries;
 	}
 }
