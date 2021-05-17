@@ -128,4 +128,15 @@ public class CompanyController {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		return company;
 	}
+
+	@GetMapping(params="aboveSalary")
+	public List<CompanyDto> getCompaniesAboveSalary(@RequestParam int aboveSalary,
+			@RequestParam(required=false) String full) {
+		List<Company> allCompanies = hrCompanyService.findByEmployeeWithSalaryHigherThan(aboveSalary);
+		if (full == null || full.equals("false")) {
+			return companyMapper.companySummaryToCompanyDtos(allCompanies);
+		} else {
+			return companyMapper.companyToCompanyDtos(allCompanies);
+		}
+	}
 }
