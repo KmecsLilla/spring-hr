@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import hu.webuni.hr.lilla.dto.CompanyDto;
+import hu.webuni.hr.lilla.dto.EmployeeDto;
 import hu.webuni.hr.lilla.model.Company;
+import hu.webuni.hr.lilla.model.Employee;
 
 @Mapper(componentModel="spring")
 public interface CompanyMapper {
@@ -25,4 +27,8 @@ public interface CompanyMapper {
 	@IterableMapping(qualifiedByName = "summary")
 	@Mapping(target = "employees", ignore = true)
 	List<CompanyDto> companySummaryToCompanyDtos(List<Company> allCompany);
+
+	@Mapping(target = "companyName", source = "company.name")
+	@Mapping(target = "status", source = "position.name")
+	EmployeeDto employeeToDto(Employee employee);
 }

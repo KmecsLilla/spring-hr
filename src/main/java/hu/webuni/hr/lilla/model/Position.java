@@ -1,8 +1,11 @@
 package hu.webuni.hr.lilla.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Position {
@@ -13,7 +16,17 @@ public class Position {
 	private String name;
 	private Qualification qualification;
 	private int minSalary;
+	@OneToMany(mappedBy = "position")
+	private List<Employee> employees;
 
+	public Position() {
+	}
+
+	public Position(String name, Qualification qualification, int minSalary) {
+		this.name = name;
+		this.qualification = qualification;
+		this.minSalary = minSalary;
+	}
 	public int getId() {
 		return id;
 	}
@@ -39,5 +52,11 @@ public class Position {
 		this.minSalary = minSalary;
 	}
 
+	public List<Employee> getEmployees() {
+		return employees;
+	}
 
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
 }

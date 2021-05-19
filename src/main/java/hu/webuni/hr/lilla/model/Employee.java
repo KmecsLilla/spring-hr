@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 public class Employee {
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 
 	private String name;
 	//private String status;
@@ -23,7 +23,7 @@ public class Employee {
 	@ManyToOne
 	private Position position;
 
-	public Employee(long id, String name, int salary, LocalDateTime startingToWork) {
+	public Employee(Long id, String name, int salary, LocalDateTime startingToWork) {
 		this.id = id;
 		this.name = name;
 		this.salary = salary;
@@ -33,11 +33,11 @@ public class Employee {
 	public Employee() {
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

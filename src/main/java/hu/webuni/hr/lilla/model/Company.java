@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 public class Company {
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 
 	private long registrationNumber;
 	private String name;
@@ -25,7 +25,7 @@ public class Company {
 	@ManyToOne
 	private CompanyType companyType;
 
-	public Company(long id, long registrationNumber, String name, String address, List<Employee> employees) {
+	public Company(Long id, int registrationNumber, String name, String address, List<Employee> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
@@ -36,11 +36,11 @@ public class Company {
 	public Company() {
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -48,7 +48,7 @@ public class Company {
 		return registrationNumber;
 	}
 
-	public void setRegistrationNumber(long registrationNumber) {
+	public void setRegistrationNumber(int registrationNumber) {
 		this.registrationNumber = registrationNumber;
 	}
 

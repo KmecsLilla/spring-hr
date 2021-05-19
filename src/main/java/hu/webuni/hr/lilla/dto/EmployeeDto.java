@@ -7,7 +7,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
 public class EmployeeDto {
-	private long id;
+	private Long id;
 
 	@NotEmpty
 	private String name;
@@ -23,7 +23,7 @@ public class EmployeeDto {
 
 	private String companyName;
 
-	public EmployeeDto(long id, String name, String status, int salary, LocalDateTime startingToWork) {
+	public EmployeeDto(Long id, String name, String status, int salary, LocalDateTime startingToWork) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -39,7 +39,7 @@ public class EmployeeDto {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
