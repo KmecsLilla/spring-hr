@@ -90,4 +90,9 @@ public class HrCompanyService {
 		List<AverageSalaryByPosition> averageSalaries = companyRepository.findAverageSalariesByPosition(id);
 		return averageSalaries;
 	}
+
+	public List<Company> findAllWithEmployees() {
+		List<Company> allCompany = companyRepository.findAllWithEmployees();
+		return allCompany;
+	}
 }

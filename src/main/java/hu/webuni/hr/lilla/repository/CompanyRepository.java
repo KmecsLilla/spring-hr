@@ -23,4 +23,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 			+ "ORDER BY AVG(e.salary) DESC")
 	public List <AverageSalaryByPosition> findAverageSalariesByPosition(long companyId);
 
+	@Query("SELECT DISTINCT c FROM Company c LEFT JOIN FETCH c.employees")
+	public List<Company> findAllWithEmployees();
 }

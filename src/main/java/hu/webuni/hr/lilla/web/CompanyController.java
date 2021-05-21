@@ -42,12 +42,24 @@ public class CompanyController {
 	@Autowired
 	EmployeeMapper employeeMapper;
 
+//	@GetMapping
+//	public List<CompanyDto> getAllCompany(@RequestParam(required = false) Boolean full) {
+//		List<Company> allCompany = hrCompanyService.findAll();
+//		if (full != null && full) {
+//			return companyMapper.companyToCompanyDtos(allCompany);
+//		} else {
+//			return companyMapper.companySummaryToCompanyDtos(allCompany);
+//		}
+//	}
+
 	@GetMapping
 	public List<CompanyDto> getAllCompany(@RequestParam(required = false) Boolean full) {
-		List<Company> allCompany = hrCompanyService.findAll();
+		List<Company> allCompany = null;
 		if (full != null && full) {
+			allCompany = hrCompanyService.findAllWithEmployees();
 			return companyMapper.companyToCompanyDtos(allCompany);
 		} else {
+			allCompany = hrCompanyService.findAll();
 			return companyMapper.companySummaryToCompanyDtos(allCompany);
 		}
 	}
