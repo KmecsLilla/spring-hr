@@ -27,7 +27,7 @@ public class EmployeeControllerIT {
 	void testThatCreatedEmployeeIsListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
 
-		EmployeeDto newEmployeeDto = new EmployeeDto(10L,"Kutyafülű Aladár", "ebmarketing menedzser", 700_000, LocalDateTime.of(2011,1,4,1,1,1));
+		EmployeeDto newEmployeeDto = new EmployeeDto(10L,"Kutyafülű Aladár", null, 700_000, LocalDateTime.of(2011,1,4,1,1,1));
 		createEmployee(newEmployeeDto);
 
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
@@ -83,11 +83,11 @@ public class EmployeeControllerIT {
 	}
 
 	@Test
-	void testThatModifiedEmployeeIsNotListed() throws Exception {
+	void testThatModifiedEmployeeIsListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
 
-		EmployeeDto employeeModifyDto = new EmployeeDto(1L,"Genovéva", "köztisztasági menedzser", 400_000, LocalDateTime.of(2013,1,4,1,1,1));
-				modifyEmployee(employeeModifyDto.getId(), employeeModifyDto);
+		EmployeeDto employeeModifyDto = new EmployeeDto(4L,"Genovéva", "köztisztasági menedzser", 400_000, LocalDateTime.of(2013,1,4,1,1,1));
+		modifyEmployee(employeeModifyDto.getId(), employeeModifyDto);
 
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();
 
@@ -97,8 +97,17 @@ public class EmployeeControllerIT {
 
 		assertThat(allEmployeesAfter.contains(employeeModifyDto));
 
-		assertThat(allEmployeesAfter.get((int) employeeModifyDto.getId()-1))
+		int indexOfModifiedDto = 0;
+		for (int i = 0; i < allEmployeesAfter.size(); i++) {
+			if (allEmployeesAfter.get(i).getId() == employeeModifyDto.getId()) {
+				indexOfModifiedDto = i;
+				break;
+			}
+		}
+
+		assertThat(allEmployeesAfter.get(indexOfModifiedDto))
 			.usingRecursiveComparison()
+			.ignoringFields("id", "status")
 			.isEqualTo(employeeModifyDto);
 	}
 
@@ -113,7 +122,7 @@ public class EmployeeControllerIT {
 	}
 
 	@Test
-	void testThatModifiedEmployeeIsListed() throws Exception {
+	void testThatModifiedEmployeeIsNotListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
 
 		EmployeeDto employeeModifyDto = new EmployeeDto(100L,"Borbála", "csoportvezető", 600_000, LocalDateTime.of(2013,1,4,1,1,1));
@@ -153,10 +162,4 @@ public class EmployeeControllerIT {
 
 		return responseList;
 	}
-
-
 }
-
-//Írj integrációs teszteket a következő végpontokhoz!
-//•EmployeeController PUT, EmployeeController POST: legalább egy lehetséges érvénytelen inputra, és egy érvényes inputra is
-//•+ ha van időd, minden lehetséges érvénytelen inputra

@@ -12,7 +12,7 @@ public class EmployeeDto {
 	@NotEmpty
 	private String name;
 
-	@NotEmpty
+//	@NotEmpty  //Position kialakítása miatt kikerült
 	private String status;
 
 	@Positive
