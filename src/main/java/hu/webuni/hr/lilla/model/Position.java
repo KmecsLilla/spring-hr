@@ -16,7 +16,7 @@ public class Position {
 	private String name;
 	private Qualification qualification;
 
-	@OneToMany(mappedBy = "position")
+	@OneToMany(/*fetch = FetchType.EAGER, */mappedBy = "position")
 	private List<Employee> employees;
 
 	public Position() {

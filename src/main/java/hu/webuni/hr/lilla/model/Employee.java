@@ -20,7 +20,7 @@ public class Employee {
 
 	@ManyToOne
 	private Company company;
-	@ManyToOne
+	@ManyToOne//(fetch = FetchType.EAGER)
 	private Position position;
 
 	public Employee(Long id, String name, int salary, LocalDateTime startingToWork) {

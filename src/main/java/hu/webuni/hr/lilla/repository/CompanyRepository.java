@@ -2,6 +2,7 @@ package hu.webuni.hr.lilla.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,6 +24,9 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 			+ "ORDER BY AVG(e.salary) DESC")
 	public List <AverageSalaryByPosition> findAverageSalariesByPosition(long companyId);
 
-	@Query("SELECT DISTINCT c FROM Company c LEFT JOIN FETCH c.employees")
+	//@Query("SELECT DISTINCT c FROM Company c LEFT JOIN FETCH c.employees")
+	//@EntityGraph(attributePaths = {"employees"})
+	@EntityGraph("Company.full")
+	@Query("SELECT c FROM Company c")
 	public List<Company> findAllWithEmployees();
 }

@@ -25,7 +25,7 @@ public interface CompanyMapper {
 	List<CompanyDto> companyToCompanyDtos(List<Company> allCompany);
 
 	@IterableMapping(qualifiedByName = "summary")
-	@Mapping(target = "employees", ignore = true)
+	//@Mapping(target = "employees", ignore = true)
 	List<CompanyDto> companySummaryToCompanyDtos(List<Company> allCompany);
 
 	@Mapping(target = "companyName", source = "company.name")
