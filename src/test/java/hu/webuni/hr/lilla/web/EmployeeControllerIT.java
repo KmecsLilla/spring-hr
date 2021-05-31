@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -16,6 +17,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import hu.webuni.hr.lilla.dto.EmployeeDto;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestDatabase
 public class EmployeeControllerIT {
 
 	private static final String BASE_URI = "/api/employees";
@@ -27,7 +29,7 @@ public class EmployeeControllerIT {
 	void testThatCreatedEmployeeIsListed() throws Exception {
 		List<EmployeeDto> allEmployeesBefore = getAllEmployees();
 
-		EmployeeDto newEmployeeDto = new EmployeeDto(10L,"Kutyafülű Aladár", null, 700_000, LocalDateTime.of(2011,1,4,1,1,1));
+		EmployeeDto newEmployeeDto = new EmployeeDto(10L,"Kutyafülű Aladár", "ebmarketing menedzser", 700_000, LocalDateTime.of(2011,1,4,1,1,1));
 		createEmployee(newEmployeeDto);
 
 		List<EmployeeDto> allEmployeesAfter = getAllEmployees();

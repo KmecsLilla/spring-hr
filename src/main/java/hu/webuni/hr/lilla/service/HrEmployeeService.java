@@ -24,6 +24,12 @@ public abstract class HrEmployeeService implements EmployeeService {
 
 	@Override
 	public Employee save(Employee employee) {
+		clearCompanyAndSetPosition(employee);
+		return employeeRepository.save(employee);
+	}
+
+
+	private void clearCompanyAndSetPosition(Employee employee) {
 		employee.setCompany(null);
 		String positionName = employee.getPosition().getName();
 		if (positionName !=null) {
@@ -36,7 +42,6 @@ public abstract class HrEmployeeService implements EmployeeService {
 			}
 			employee.setPosition(position);
 		}
-		return employeeRepository.save(employee);
 	}
 
 
@@ -45,6 +50,7 @@ public abstract class HrEmployeeService implements EmployeeService {
 		if (!employeeRepository.existsById(employee.getId())) {
 			return null;
 		} else {
+			clearCompanyAndSetPosition(employee);
 			return employeeRepository.save(employee);
 		}
 	}
