@@ -37,4 +37,6 @@ public interface EmployeeService {
 
 	Page<Employee> findBySalaryGreaterThan(Integer minSalary, Pageable pageable);
 
+	public List<Employee> findEmployeesByExample(Employee employee);
+
 }

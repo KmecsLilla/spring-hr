@@ -109,4 +109,10 @@ public class EmployeeController {
 	public int getPayRaise(@RequestBody @Valid Employee employee) {
 		return hrEmployeeService.getPayRaisePercent(employee);
 	}
+
+	@PostMapping("/search")
+	public List<EmployeeDto> findByExample(@RequestBody EmployeeDto example) {
+		return employeeMapper.allEmployeeToEmployeeDtos(hrEmployeeService.findEmployeesByExample(employeeMapper.dtoToEmployee(example))) ;
+
+	}
 }

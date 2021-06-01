@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class HrCompanyService {
 
 	@Autowired
 	EmployeeRepository employeeRepository;
+
+	@Autowired
+	PositionService positionService;
 
 	public Company save(Company company) {
 		return companyRepository.save(company);
@@ -45,23 +50,29 @@ public class HrCompanyService {
 		companyRepository.deleteById(id);
 	}
 
+	@Transactional
 	public Company addEmployee(long companyId, Employee employee) {
-		Company company = companyRepository.findById(companyId).get();
+//		Company company = companyRepository.findById(companyId).get();
+		Company company = companyRepository.findWithEmployeesById(companyId).get();
+		positionService.assignPosition(employee);
 		company.addEmployee(employee);
 		// companyRepository.save(company); cascade-dal működik
-		employeeRepository.save(employee);
+		Employee savedEmployee = employeeRepository.save(employee);
+		company.addEmployee(savedEmployee);
 		return company;
 	}
 
+	@Transactional
 	public Company deleteEmployee(long id, long employeeId) {
 		Company company = companyRepository.findById(id).get();
 		Employee employee = employeeRepository.findById(employeeId).get();
 		employee.setCompany(null);
 		company.getEmployees().remove(employee);
-		employeeRepository.save(employee);
+//		employeeRepository.save(employee); //mert menedzselt!
 		return company;
 	}
 
+	@Transactional
 	public Company replaceEmployees(long id, List<Employee> employees) {
 		Company company = companyRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
 		company.getEmployees().stream().forEach(e -> {
@@ -70,8 +81,12 @@ public class HrCompanyService {
 		company.getEmployees().clear();
 
 		for (Employee employee : employees) {
-			company.addEmployee(employee);
-			employeeRepository.save(employee);
+//			company.addEmployee(employee);
+//			positionService.assignPosition(employee);
+//			employeeRepository.save(employee);
+
+			positionService.assignPosition(employee);
+			company.addEmployee(employeeRepository.save(employee));
 		}
 		return company;
 	}

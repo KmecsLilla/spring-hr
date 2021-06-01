@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -38,5 +40,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 			+ "AND e2.salary < :minSalary "
 			+ "AND e2.company.id = :companyId)")
 	int updateSalaries(String positionName, int minSalary, long companyId);
+
+	List<Employee> findAll(Specification<Employee> spec, Sort by);
 
 }
