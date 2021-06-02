@@ -47,10 +47,10 @@ public class HolidayRequestController {
 	}
 
 	@PostMapping
-	public HolidayRequestDto addHolidayRequest(@RequestBody HolidayRequestDto newHolidayRequest) {
+	public HolidayRequestDto addHolidayRequest(@PathVariable long id, @RequestBody HolidayRequestDto newHolidayRequest) {
 		HolidayRequest holidayRequest;
 		try {
-			holidayRequest = holidayRequestService.addHolidayRequest(holidayRequestMapper.dtoToHolidayRequest(newHolidayRequest), newHolidayRequest);
+			holidayRequest = holidayRequestService.addHolidayRequest(holidayRequestMapper.dtoToHolidayRequest(newHolidayRequest), id);
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}

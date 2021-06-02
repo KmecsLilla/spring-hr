@@ -116,4 +116,10 @@ public class Employee {
 		this.managedEmployees = managedEmployees;
 	}
 
+	public void addHolidayRequest(HolidayRequest holidayRequest) {
+		holidayRequests.add(holidayRequest);
+		//?this.setHolidayRequests(holidayRequests);
+
+	}
+
 }
