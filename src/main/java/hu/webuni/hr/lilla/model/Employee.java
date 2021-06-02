@@ -1,11 +1,13 @@
 package hu.webuni.hr.lilla.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Employee {
@@ -22,6 +24,15 @@ public class Employee {
 	private Company company;
 	@ManyToOne//(fetch = FetchType.EAGER)
 	private Position position;
+
+	@OneToMany(mappedBy = "employee")
+	private List<HolidayRequest> holidayRequests;
+
+	@ManyToOne
+	private Employee manager;
+
+	@OneToMany(mappedBy = "manager")
+	private List<Employee> managedEmployees;
 
 	public Employee(Long id, String name, int salary, LocalDateTime startingToWork) {
 		this.id = id;
@@ -79,6 +90,30 @@ public class Employee {
 
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	public List<HolidayRequest> getHolidayRequests() {
+		return holidayRequests;
+	}
+
+	public void setHolidayRequests(List<HolidayRequest> holidayRequests) {
+		this.holidayRequests = holidayRequests;
+	}
+
+	public Employee getManager() {
+		return manager;
+	}
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
+	}
+
+	public List<Employee> getManagedEmployees() {
+		return managedEmployees;
+	}
+
+	public void setManagedEmployees(List<Employee> managedEmployees) {
+		this.managedEmployees = managedEmployees;
 	}
 
 }
