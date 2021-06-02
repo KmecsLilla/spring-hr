@@ -43,19 +43,35 @@ public class HolidayRequestService {
 		return holidayRequestRepository.save(holidayRequest);
 	}
 
-	public HolidayRequest modifyHolidayRequest(long id, HolidayRequest dtoToHolidayRequest,
+	public HolidayRequest modifyHolidayRequest(long id, HolidayRequest newHolidayRequest,
 			HolidayRequestDto modifiedHolidayRequest) {
-
-		return null;
+		HolidayRequest holidayRequest = holidayRequestRepository.findById(id).get();
+		if (holidayRequest.getApproved() != null) {
+			throw new IllegalStateException();
+		}
+		holidayRequest.setStartDate(newHolidayRequest.getStartDate());
+		holidayRequest.setEndDate(newHolidayRequest.getEndDate());
+		holidayRequest.setApprovedAt(LocalDateTime.now());
+		return holidayRequest;
 	}
 
 	public void deleteHolidayRequest(long id) {
+		HolidayRequest holidayRequest = holidayRequestRepository.findById(id).get();
+		if (holidayRequest.getApproved() != null) {
+			throw new IllegalStateException();
+		}
 		holidayRequestRepository.deleteById(id);
 	}
 
 	public HolidayRequest approveHolidayRequest(long id, long approverId, Boolean status) {
-		// TODO Auto-generated method stub
-		return null;
+		HolidayRequest holidayRequest = holidayRequestRepository.findById(id).get();
+		if (holidayRequest.getApproved() != null) {
+			throw new IllegalStateException();
+		}
+		holidayRequest.setApprover(employeeService.findById(approverId).get());
+		holidayRequest.setApproved(status);
+		holidayRequest.setApprovedAt(LocalDateTime.now());
+		return holidayRequest;
 	}
 
 
