@@ -29,7 +29,6 @@ public abstract class HrEmployeeService implements EmployeeService {
 		return employeeRepository.save(employee);
 	}
 
-
 	private void clearCompanyAndSetPosition(Employee employee) {
 		employee.setCompany(null);
 		positionService.assignPosition(employee);

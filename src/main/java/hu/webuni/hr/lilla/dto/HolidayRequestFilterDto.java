@@ -1,38 +1,39 @@
 package hu.webuni.hr.lilla.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class HolidayRequestFilterDto {
 
 	//private long id;
-	private LocalDateTime createdTimeStart;
-	private LocalDateTime createdTimeEnd;
+	private LocalDateTime createDateTimeStart;
+	private LocalDateTime createDateTimeEnd;
 
 	private String employeeName;
 
 	private String approverName;
 	private Boolean approved;
 
-	private LocalDateTime startDate;
-	private LocalDateTime endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 
 	public HolidayRequestFilterDto() {
 		}
 
-	public LocalDateTime getCreatedTimeStart() {
-		return createdTimeStart;
+	public LocalDateTime getCreateDateTimeStart() {
+		return createDateTimeStart;
 	}
 
-	public void setCreatedTimeStart(LocalDateTime createdTimeStart) {
-		this.createdTimeStart = createdTimeStart;
+	public void setCreateDateTimeStart(LocalDateTime createDateTimeStart) {
+		this.createDateTimeStart = createDateTimeStart;
 	}
 
-	public LocalDateTime getCreatedTimeEnd() {
-		return createdTimeEnd;
+	public LocalDateTime getCreateDateTimeEnd() {
+		return createDateTimeEnd;
 	}
 
-	public void setCreatedTimeEnd(LocalDateTime createdTimeEnd) {
-		this.createdTimeEnd = createdTimeEnd;
+	public void setCreateDateTimeEnd(LocalDateTime createDateTimeEnd) {
+		this.createDateTimeEnd = createDateTimeEnd;
 	}
 
 	public String getEmployeeName() {
@@ -59,19 +60,19 @@ public class HolidayRequestFilterDto {
 		this.approved = approved;
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

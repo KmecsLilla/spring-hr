@@ -1,6 +1,7 @@
 package hu.webuni.hr.lilla.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -117,9 +118,11 @@ public class Employee {
 	}
 
 	public void addHolidayRequest(HolidayRequest holidayRequest) {
-		holidayRequests.add(holidayRequest);
-		//?this.setHolidayRequests(holidayRequests);
-
+		if (this.holidayRequests == null) {
+			this.holidayRequests = new ArrayList<>();
+		}
+		this.holidayRequests.add(holidayRequest);
+		holidayRequest.setEmployee(this);
 	}
 
 }

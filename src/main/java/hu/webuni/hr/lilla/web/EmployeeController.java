@@ -30,6 +30,7 @@ import hu.webuni.hr.lilla.service.HrEmployeeService;
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
+
 	@Autowired
 	HrEmployeeService hrEmployeeService;
 
